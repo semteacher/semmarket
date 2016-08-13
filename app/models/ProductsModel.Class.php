@@ -82,14 +82,14 @@ class ProductsModel extends Model {
 
     public function setProductByArray($productDeatils)
     {
-        $this->_idContact = isset($productDeatils['id']) ? trim($productDeatils['id']) : NULL;
-        $this->_firstName = isset($productDeatils['code']) ? trim($productDeatils['code']) : NULL;
-        $this->_lastName = isset($productDeatils['name']) ? trim($productDeatils['name']) : NULL;
-        $this->_email = isset($productDeatils['description']) ? trim($productDeatils['description']) : NULL;
-        $this->_phoneHome = isset($productDeatils['stockqty']) ? trim($productDeatils['stockqty']) : NULL;
-        $this->_phoneWork = isset($productDeatils['price']) ? trim($productDeatils['price']) : NULL;
-        $this->_phoneCell = isset($productDeatils['picture']) ? trim($productDeatils['picture']) : NULL;
-        $this->_phoneBest = isset($contactDeatils['thumbail']) ? trim($contactDeatils['thumbail']) : NULL;
+        $this->_id = isset($productDeatils['id']) ? trim($productDeatils['id']) : NULL;
+        $this->_code = isset($productDeatils['code']) ? trim($productDeatils['code']) : NULL;
+        $this->_name = isset($productDeatils['name']) ? trim($productDeatils['name']) : NULL;
+        $this->_description = isset($productDeatils['description']) ? trim($productDeatils['description']) : NULL;
+        $this->_stockqty = isset($productDeatils['stockqty']) ? trim($productDeatils['stockqty']) : NULL;
+        $this->_price = isset($productDeatils['price']) ? trim($productDeatils['price']) : NULL;
+        $this->_picture = isset($productDeatils['picture']) ? trim($productDeatils['picture']) : NULL;
+        $this->_thumbail = isset($contactDeatils['thumbail']) ? trim($contactDeatils['thumbail']) : NULL;
     }
     
     public function getAllProducts($sortoptions=NULL)
@@ -99,7 +99,7 @@ class ProductsModel extends Model {
         $sql = "SELECT
                     *
                 FROM
-                    producs p";
+                    products p";
         if ($sortoptions) {
             $sql = $sql . " ORDER BY p." . $sortoptions[0];
             if (isset($sortoptions[1])) {
@@ -109,15 +109,15 @@ class ProductsModel extends Model {
         $sql = $sql . ";";
 
         $this->_setSql($sql);
-        $producs = $this->getAll();
+        $products = $this->getAll();
 //var_dump($contacts);
-        if (empty($producs))
+        if (empty($products))
         {
             return false;
         } else {
-            foreach ($producs as $produc) {
-                $tmpproduct = new ContactsModel;
-                $tmpproduct->setProductByArray($produc);
+            foreach ($products as $product) {
+                $tmpproduct = new ProductsModel;
+                $tmpproduct->setProductByArray($product);
                 array_push($productList, $tmpproduct);
             }
 //var_dump($contactlist);
@@ -133,18 +133,18 @@ class ProductsModel extends Model {
         $sql = "SELECT
                     *
                 FROM
-                    producs p
+                    products p
                 WHERE
                     p.id = ?";
 
         $this->_setSql($sql);
-        $contactDetails = $this->getRow(array($id));
+        $productDetails = $this->getRow(array($id));
 
-        if (empty($contactDetails))
+        if (empty($productDetails))
         {
             return false;
         } else {
-            return $contactDetails;
+            return $productDetails;
         }
 
     }
@@ -161,13 +161,13 @@ class ProductsModel extends Model {
                     p.id = ?";
 
         $this->_setSql($sql);
-        $productDeatils = $this->getRow(array($id));
+        $productDetails = $this->getRow(array($id));
 
-        if (empty($productDeatils))
+        if (empty($productDetails))
         {
             return false;
         } else {
-            $tmpproduct=$this->setProductByArray($productDeatils);
+            $tmpproduct=$this->setProductByArray($productDetails);
             
             return $tmpproduct;
         }

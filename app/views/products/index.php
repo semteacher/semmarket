@@ -23,14 +23,14 @@
                 <tr>
                     <th>-</th>
                     <th>
-                        <a href="<?php echo SITE_ROOT; ?>/products/index&sort=fname<?php if (isset($queryparams) && $queryparams[0] == 'name' && !isset($queryparams[1])) {
+                        Sorting: <a href="<?php echo SITE_ROOT; ?>/products/index&sort=name<?php if (isset($queryparams) && $queryparams[0] == 'name' && !isset($queryparams[1])) {
                             echo '.desc" class="asc';
                         } elseif (isset($queryparams) && $queryparams[0] == 'name' && isset($queryparams[1])) {
                             echo '" class="desc';
-                        } ?>">First Name</a>
+                        } ?>">Name</a>
                     </th>
-                    <th>-</th>
-                    <th>-</th>
+                    <th width="50px">-</th>
+                    <th width="150px">-</th>
                 </tr>
 
                 <?php foreach ($products as $product): ?>
@@ -40,12 +40,12 @@
                         <td>
                             <?php
                                 echo "Product Id: ".$product->getId()."<br>";
-                                echo "Product Name: ".$product->getName()."<br>";
+                                echo "Name: ".$product->getName()."<br>";
                                 echo "Description:".$product->getDescription()."<br>";
                                 echo "Price: ".$product->getPrice()."<br>";
                             ?>
                         </td>
-                        <td>--input--</td>
+                        <td><input type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" /></td>
                         <td><a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
                                onclick="return confirm('Are you sure you want?')">Add to Cart</a></td>
                     </tr>
