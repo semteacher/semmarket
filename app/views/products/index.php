@@ -18,7 +18,30 @@
         <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
 
         <?php if ($products): ?>
-
+            <div class="rtable">
+        <?php foreach ($products as $product): ?>
+            <div >
+                <div class="inline">
+                    <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="100" width="100">
+                </div>
+                <div class="inline">
+                    <?php
+                    echo "Name: ".$product->getName()."<br>";
+                    echo "Description: ".$product->getDescription()."<br>";
+                    echo "Price, $: ".$product->getPrice()."<br>";
+                    ?>
+                </div>
+                <div>
+                    <span>
+                        <input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" />
+                        <a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
+                           onclick="return confirm('Are you sure you want?')">Add to Cart</a>
+                    </span>
+                </div>
+            </div>
+            <?php endforeach; ?>
+                </div>
+            
             <table class="datagrid box-center">
                 <tr>
                     <th>-</th>
@@ -36,16 +59,15 @@
                 <?php foreach ($products as $product): ?>
 
                     <tr>
-                        <td><?php echo $product->getThumbail(); ?></td>
+                        <td> <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="42" width="42"> </td>
                         <td>
                             <?php
-                                echo "Product Id: ".$product->getId()."<br>";
                                 echo "Name: ".$product->getName()."<br>";
                                 echo "Description:".$product->getDescription()."<br>";
-                                echo "Price: ".$product->getPrice()."<br>";
+                                echo "Price, $: ".$product->getPrice()."<br>";
                             ?>
                         </td>
-                        <td><input type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" /></td>
+                        <td><input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" /></td>
                         <td><a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
                                onclick="return confirm('Are you sure you want?')">Add to Cart</a></td>
                     </tr>

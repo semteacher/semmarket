@@ -14,7 +14,7 @@ class ProductsModel extends Model {
     private $_stockqty;
     private $_price;
     private $_picture;
-    private $_thumbail;
+    private $_thumbnail;
 
     /**
      * @return mixed
@@ -75,9 +75,9 @@ class ProductsModel extends Model {
     /**
      * @return mixed
      */
-    public function getThumbail()
+    public function getThumbnail()
     {
-        return $this->_thumbail;
+        return $this->_thumbnail;
     }
 
     public function setProductByArray($productDeatils)
@@ -89,7 +89,7 @@ class ProductsModel extends Model {
         $this->_stockqty = isset($productDeatils['stockqty']) ? trim($productDeatils['stockqty']) : NULL;
         $this->_price = isset($productDeatils['price']) ? trim($productDeatils['price']) : NULL;
         $this->_picture = isset($productDeatils['picture']) ? trim($productDeatils['picture']) : NULL;
-        $this->_thumbail = isset($contactDeatils['thumbail']) ? trim($contactDeatils['thumbail']) : NULL;
+        $this->_thumbnail = isset($productDeatils['thumbnail']) ? trim($productDeatils['thumbnail']) : NULL;
     }
     
     public function getAllProducts($sortoptions=NULL)

@@ -193,8 +193,10 @@ input {
     clear: left;
     left: 186px;
 }
-
-
+.rtable{
+	display: flex;
+	float: left;
+}
 
 
 
