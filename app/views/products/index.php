@@ -18,20 +18,20 @@
         <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
 
         <?php if ($products): ?>
-            <div class="rtable">
+            <div class="box-center">
         <?php foreach ($products as $product): ?>
-            <div >
-                <div class="inline">
-                    <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="100" width="100">
+            <div class="floating-box">
+                <div class="alignleft">
+                    <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="200" width="200">
                 </div>
-                <div class="inline">
+                <div class="alignleft">
                     <?php
-                    echo "Name: ".$product->getName()."<br>";
+                    echo "Product: ".$product->getName()."<br>";
                     echo "Description: ".$product->getDescription()."<br>";
                     echo "Price, $: ".$product->getPrice()."<br>";
                     ?>
                 </div>
-                <div>
+                <div class="alignleft text-bottom">
                     <span>
                         <input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" />
                         <a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
@@ -59,7 +59,7 @@
                 <?php foreach ($products as $product): ?>
 
                     <tr>
-                        <td> <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="42" width="42"> </td>
+                        <td> <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="50" width="50"> </td>
                         <td>
                             <?php
                                 echo "Name: ".$product->getName()."<br>";

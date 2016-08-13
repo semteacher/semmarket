@@ -12,9 +12,7 @@
 <nav>
     <ul id="sitemenu">
         <li><a href="<?php echo SITE_ROOT; ?>/">Home</a></li>
-        <li><a href="<?php echo SITE_ROOT; ?>/albums/share/1">Albums</a></li>
         <li><a href="<?php echo SITE_ROOT; ?>/products/index">Product Catalog</a></li>
-        <li><a href="<?php echo SITE_ROOT; ?>/contacts/index">Contact Manager</a></li>
         <li><a href="<?php echo SITE_ROOT; ?>/users/index">Users</a></li>
     </ul>
 </nav>

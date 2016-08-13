@@ -193,9 +193,12 @@ input {
     clear: left;
     left: 186px;
 }
-.rtable{
-	display: flex;
+.floating-box {
 	float: left;
+	width: 450px;
+	height: 200px;
+	margin: 5px;
+	border: 2px solid #c9e0ed;
 }
 
 
