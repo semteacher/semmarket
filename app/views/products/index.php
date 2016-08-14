@@ -19,27 +19,34 @@
 
         <?php if ($products): ?>
             <div class="box-center">
-                <?php foreach ($products as $product): ?>
+                <?php
+                foreach ($products as $product):
+                    $pdodId = $product->getId();
+                    $prodName = $product->getName();
+                    $prodDesc = $product->getDescription();
+                    $prodStock = $product->getStockqty();
+                    $prodPrice = $product->getPrice();
+                    $prodThumb = $product->getThumbnail();
+                    ?>
                     <div class="floating-box">
                         <div class="alignleft">
                             <img
-                                src="<?php echo SITE_ROOT . DS . 'media' . DS . 'catalog' . DS . $product->getThumbnail(); ?>"
-                                alt="<?php echo $product->getName(); ?>" height="200" width="200"/>
+                                src="<?php echo SITE_ROOT . DS . 'media' . DS . 'catalog' . DS . $prodThumb; ?>"
+                                alt="<?php echo $prodName; ?>" height="200" width="200"/>
                         </div>
                         <div class="alignleft">
                             <?php
-                            echo "Product: " . $product->getName() . "<br>";
-                            echo "Description: " . $product->getDescription() . "<br>";
-                            echo "Price, $: " . $product->getPrice() . "<br>";
+                            echo "Product: " . $prodName . "<br>";
+                            echo "Description: " . $prodDesc . "<br>";
+                            echo "Price, $: " . $prodPrice . "<br>";
                             ?>
                         </div>
                         <div class="alignleft">
-
-                            <input class="cartspin" name="qty<?php echo $product->getId(); ?>" type="number" value="1"
+                            <input class="cartspin" name="qty<?php echo $pdodId; ?>" type="number" value="1"
                                    min="1"
-                                   max="<?php echo $product->getStockqty(); ?>"/>
+                                   max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
-                                    onclick="AddtoCart('<?php echo $product->getId(); ?>', '<?php echo $product->getName(); ?>', '2', '<?php echo $product->getPrice(); ?>')">
+                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."'"; ?>)">
                                 Add to Cart
                             </button>
                         </div>
@@ -97,11 +104,19 @@
 
     <script language="JavaScript">
         var shoppingCart = [];
-        function AddtoCart(id, name, price, qty) {
-            var cartArray0 = sessionStorage.getItem("shoppingCart");
-            console.log(cartArray0);
-            if (cartArray0) {
-                shoppingCart.push(JSON.parse(cartArray0));
+        //get qty from page by control name
+        function getCartQty(id){
+            var qty = 0;
+            qty = parseInt(document.getElementsByName("qty"+id)[0].value);
+            return qty;
+        }
+        //add product to cart
+        function AddtoCart(id, name, price) {
+            //get cart items from session
+            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
+            console.log(cartArrayJSON);
+            if (cartArrayJSON) {
+                shoppingCart.push(JSON.parse(cartArrayJSON));
             }
             //create JavaScript Object that will hold product properties
             var singleProduct = {};
@@ -109,18 +124,16 @@
             singleProduct.Id = id;
             singleProduct.Name = name;
             singleProduct.Price = price;
-            singleProduct.Qty = qty;
+            singleProduct.Qty = getCartQty(id);
             //Add newly created product to shopping cart
             shoppingCart.push(singleProduct);
-            //call display function to show on screen
-            //displayShoppingCart();
+            //update cart stored in session
             var jsonStr = JSON.stringify(shoppingCart);
             sessionStorage.setItem("shoppingCart", jsonStr);
 
-            var cartArray = sessionStorage.getItem("shoppingCart");
-
-            var cartObj = JSON.parse(cartArray);
-            console.log(cartObj);
+            //var cartArray = sessionStorage.getItem("shoppingCart");
+            //var cartObj = JSON.parse(cartArray);
+            //console.log(cartObj);
         }
 
     </script>
