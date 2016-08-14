@@ -114,8 +114,8 @@
         function AddtoCart(id, name, price) {
             //get cart items from session
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            console.log(cartArrayJSON);
-            if (cartArrayJSON) {
+            //console.log(cartArrayJSON);
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
                 shoppingCart.push(JSON.parse(cartArrayJSON));
             }
             //create JavaScript Object that will hold product properties
@@ -131,9 +131,22 @@
             var jsonStr = JSON.stringify(shoppingCart);
             sessionStorage.setItem("shoppingCart", jsonStr);
 
-            //var cartArray = sessionStorage.getItem("shoppingCart");
-            //var cartObj = JSON.parse(cartArray);
-            //console.log(cartObj);
+            //get cart totlas info
+            var cartArrayJSON = sessionStorage.getItem("shoppingCartTotals");
+            console.log(cartArrayJSON);
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
+                var shoppingCartTotals = JSON.parse(cartArrayJSON);
+                shoppingCartTotals.totalQty = shoppingCartTotals.totalQty + singleProduct.Qty;
+                shoppingCartTotals.totalFee = shoppingCartTotals.totalFee + (singleProduct.Qty*singleProduct.Price);
+            } else {
+                var shoppingCartTotals = {};
+                shoppingCartTotals.totalQty = singleProduct.Qty;
+                shoppingCartTotals.totalFee = singleProduct.Qty*singleProduct.Price;
+            }
+            //update cart totals
+            jsonStr = JSON.stringify(shoppingCartTotals);
+            sessionStorage.setItem("shoppingCartTotals", jsonStr);
+            console.log(shoppingCartTotals);
         }
 
     </script>
