@@ -19,38 +19,44 @@
 
         <?php if ($products): ?>
             <div class="box-center">
-        <?php foreach ($products as $product): ?>
-            <div class="floating-box">
-                <div class="alignleft">
-                    <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="200" width="200">
-                </div>
-                <div class="alignleft">
-                    <?php
-                    echo "Product: ".$product->getName()."<br>";
-                    echo "Description: ".$product->getDescription()."<br>";
-                    echo "Price, $: ".$product->getPrice()."<br>";
-                    ?>
-                </div>
-                <div class="alignleft text-bottom">
-                    <span>
-                        <input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" />
-                        <a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
-                           onclick="return confirm('Are you sure you want?')">Add to Cart</a>
-                    </span>
-                </div>
+                <?php foreach ($products as $product): ?>
+                    <div class="floating-box">
+                        <div class="alignleft">
+                            <img
+                                src="<?php echo SITE_ROOT . DS . 'media' . DS . 'catalog' . DS . $product->getThumbnail(); ?>"
+                                alt="<?php echo $product->getName(); ?>" height="200" width="200"/>
+                        </div>
+                        <div class="alignleft">
+                            <?php
+                            echo "Product: " . $product->getName() . "<br>";
+                            echo "Description: " . $product->getDescription() . "<br>";
+                            echo "Price, $: " . $product->getPrice() . "<br>";
+                            ?>
+                        </div>
+                        <div class="alignleft">
+
+                            <input class="cartspin" name="qty<?php echo $product->getId(); ?>" type="number" value="1"
+                                   min="1"
+                                   max="<?php echo $product->getStockqty(); ?>"/>
+                            <button type="button" class="button"
+                                    onclick="AddtoCart('<?php echo $product->getId(); ?>', '<?php echo $product->getName(); ?>', '2', '<?php echo $product->getPrice(); ?>')">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
-                </div>
-            
+
             <table class="datagrid box-center">
                 <tr>
                     <th>-</th>
                     <th>
-                        Sorting: <a href="<?php echo SITE_ROOT; ?>/products/index&sort=name<?php if (isset($queryparams) && $queryparams[0] == 'name' && !isset($queryparams[1])) {
-                            echo '.desc" class="asc';
-                        } elseif (isset($queryparams) && $queryparams[0] == 'name' && isset($queryparams[1])) {
-                            echo '" class="desc';
-                        } ?>">Name</a>
+                        Sorting: <a
+                            href="<?php echo SITE_ROOT; ?>/products/index&sort=name<?php if (isset($queryparams) && $queryparams[0] == 'name' && !isset($queryparams[1])) {
+                                echo '.desc" class="asc';
+                            } elseif (isset($queryparams) && $queryparams[0] == 'name' && isset($queryparams[1])) {
+                                echo '" class="desc';
+                            } ?>">Name</a>
                     </th>
                     <th width="50px">-</th>
                     <th width="150px">-</th>
@@ -59,17 +65,21 @@
                 <?php foreach ($products as $product): ?>
 
                     <tr>
-                        <td> <img src="<?php echo SITE_ROOT. DS . 'media'. DS . 'catalog' . DS . $product->getThumbnail(); ?>" alt="<?php echo $product->getName(); ?>" height="50" width="50"> </td>
+                        <td><img
+                                src="<?php echo SITE_ROOT . DS . 'media' . DS . 'catalog' . DS . $product->getThumbnail(); ?>"
+                                alt="<?php echo $product->getName(); ?>" height="50" width="50"></td>
                         <td>
                             <?php
-                                echo "Name: ".$product->getName()."<br>";
-                                echo "Description:".$product->getDescription()."<br>";
-                                echo "Price, $: ".$product->getPrice()."<br>";
+                            echo "Name: " . $product->getName() . "<br>";
+                            echo "Description:" . $product->getDescription() . "<br>";
+                            echo "Price, $: " . $product->getPrice() . "<br>";
                             ?>
                         </td>
-                        <td><input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1" max="<?php echo $product->getStockqty(); ?>" /></td>
-                        <td><a class="button" href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
-                               onclick="return confirm('Are you sure you want?')">Add to Cart</a></td>
+                        <td><input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1"
+                                   max="<?php echo $product->getStockqty(); ?>"/></td>
+                        <td><a class="button"
+                               href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
+                               onclick="AddtoCart('Are you sure you want?')">Add to Cart</a></td>
                     </tr>
 
                 <?php endforeach; ?>
@@ -84,5 +94,35 @@
         <?php endif; ?>
 
     </section>
+
+    <script language="JavaScript">
+        var shoppingCart = [];
+        function AddtoCart(id, name, price, qty) {
+            var cartArray0 = sessionStorage.getItem("shoppingCart");
+            console.log(cartArray0);
+            if (cartArray0) {
+                shoppingCart.push(JSON.parse(cartArray0));
+            }
+            //create JavaScript Object that will hold product properties
+            var singleProduct = {};
+            //Fill the product object with data
+            singleProduct.Id = id;
+            singleProduct.Name = name;
+            singleProduct.Price = price;
+            singleProduct.Qty = qty;
+            //Add newly created product to shopping cart
+            shoppingCart.push(singleProduct);
+            //call display function to show on screen
+            //displayShoppingCart();
+            var jsonStr = JSON.stringify(shoppingCart);
+            sessionStorage.setItem("shoppingCart", jsonStr);
+
+            var cartArray = sessionStorage.getItem("shoppingCart");
+
+            var cartObj = JSON.parse(cartArray);
+            console.log(cartObj);
+        }
+
+    </script>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>
