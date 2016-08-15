@@ -43,7 +43,7 @@ class ProductsController extends Controller
             return $this->_view->output();
 
         } catch (Exception $e) {
-            echo "Application error - cannot display Contacts list: " . $e->getMessage();
+            echo "Application error - cannot display Products Catalog: " . $e->getMessage();
         }
     }
 }

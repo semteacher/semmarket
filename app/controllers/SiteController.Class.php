@@ -6,7 +6,8 @@
  * Time: 17:37
  */
 
-class SiteController extends Controller {
+class SiteController extends Controller 
+{
     public function __construct($model, $action)
     {
         parent::__construct($model, $action);

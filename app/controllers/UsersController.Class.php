@@ -6,7 +6,8 @@
  * Time: 18:10
  */
 
-class UsersController extends Controller {
+class UsersController extends Controller 
+{
 
     public function __construct($model, $action)
     {
@@ -20,7 +21,7 @@ class UsersController extends Controller {
 
             $users = $this->_model->getAllUsers();
             $this->_view->set('users', $users);
-            $this->_view->set('title', 'BundleJoy - User Manager');
+            $this->_view->set('title', 'SemMarket Inc. - User Manager');
             $this->_view->set('pageheader', 'User Management Main Page');
 
             return $this->_view->output();

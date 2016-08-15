@@ -17,6 +17,11 @@
 
         <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
 
+        <button id="checkout" type="button" class="button"
+                onclick="CheckourCart()">
+            Checkout Cart
+        </button>
+
         <?php if ($products): ?>
             <div class="box-center">
                 <?php
@@ -55,7 +60,7 @@
             </div>
 
             <table class="datagrid box-center">
-                <tr>
+                <thead>>
                     <th>-</th>
                     <th>
                         Sorting: <a
@@ -67,7 +72,8 @@
                     </th>
                     <th width="50px">-</th>
                     <th width="150px">-</th>
-                </tr>
+                </thead>
+                <tbody>
 
                 <?php foreach ($products as $product): ?>
 
@@ -91,6 +97,7 @@
 
                 <?php endforeach; ?>
 
+                </tbody>
             </table>
 
         <?php else: ?>
@@ -118,7 +125,7 @@
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
             if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") 
             {
-                shoppingCart.push(JSON.parse(cartArrayJSON));
+                shoppingCart = JSON.parse(cartArrayJSON);
             }
             //create JavaScript Object that will hold product properties and fill data
             var singleProduct = {};
@@ -139,7 +146,7 @@
             {
                 var shoppingCartTotals = JSON.parse(cartArrayJSON);
                 shoppingCartTotals.totalQty = shoppingCartTotals.totalQty + singleProduct.Qty;
-                shoppingCartTotals.totalFee = shoppingCartTotals.totalFee + fixround(singleProduct.Qty*singleProduct.Price,2);
+                shoppingCartTotals.totalFee = fixround(shoppingCartTotals.totalFee + (singleProduct.Qty*singleProduct.Price),2);
             } 
             else 
             {
@@ -150,8 +157,13 @@
             //update cart totals
             jsonStr = JSON.stringify(shoppingCartTotals);
             sessionStorage.setItem("shoppingCartTotals", jsonStr);
+            console.log(fixround(singleProduct.Qty*singleProduct.Price,2));
             console.log(shoppingCartTotals);
             document.getElementById("cartmenulink").innerHTML = "In Cart: "+ shoppingCartTotals.totalQty + " ($"+ shoppingCartTotals.totalFee +")";
+        }
+        function CheckourCart(){
+            //get cart items from session
+            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
         }
     </script>
 
