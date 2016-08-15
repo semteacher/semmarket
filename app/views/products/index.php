@@ -105,22 +105,23 @@
     <script language="JavaScript">
         var shoppingCart = [];
         //get qty from page by control name
-        function getCartQty(id){
+        function getCartQty(id)
+        {
             var qty = 0;
             qty = parseInt(document.getElementsByName("qty"+id)[0].value);
             return qty;
         }
         //add product to cart
-        function AddtoCart(id, name, price) {
+        function AddtoCart(id, name, price) 
+        {
             //get cart items from session
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            //console.log(cartArrayJSON);
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") 
+            {
                 shoppingCart.push(JSON.parse(cartArrayJSON));
             }
-            //create JavaScript Object that will hold product properties
+            //create JavaScript Object that will hold product properties and fill data
             var singleProduct = {};
-            //Fill the product object with data
             singleProduct.Id = id;
             singleProduct.Name = name;
             singleProduct.Price = price;
@@ -132,23 +133,26 @@
             sessionStorage.setItem("shoppingCart", jsonStr);
 
             //get cart totlas info
-            var cartArrayJSON = sessionStorage.getItem("shoppingCartTotals");
+            cartArrayJSON = sessionStorage.getItem("shoppingCartTotals");
             console.log(cartArrayJSON);
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") 
+            {
                 var shoppingCartTotals = JSON.parse(cartArrayJSON);
                 shoppingCartTotals.totalQty = shoppingCartTotals.totalQty + singleProduct.Qty;
-                shoppingCartTotals.totalFee = shoppingCartTotals.totalFee + (singleProduct.Qty*singleProduct.Price);
-            } else {
+                shoppingCartTotals.totalFee = shoppingCartTotals.totalFee + fixround(singleProduct.Qty*singleProduct.Price,2);
+            } 
+            else 
+            {
                 var shoppingCartTotals = {};
                 shoppingCartTotals.totalQty = singleProduct.Qty;
-                shoppingCartTotals.totalFee = singleProduct.Qty*singleProduct.Price;
+                shoppingCartTotals.totalFee = fixround(singleProduct.Qty*singleProduct.Price,2);
             }
             //update cart totals
             jsonStr = JSON.stringify(shoppingCartTotals);
             sessionStorage.setItem("shoppingCartTotals", jsonStr);
             console.log(shoppingCartTotals);
+            document.getElementById("cartmenulink").innerHTML = "In Cart: "+ shoppingCartTotals.totalQty + " ($"+ shoppingCartTotals.totalFee +")";
         }
-
     </script>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>
