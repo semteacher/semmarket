@@ -51,7 +51,7 @@
                                    min="1"
                                    max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
-                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."'"; ?>)">
+                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'"; ?>)">
                                 Add to Cart
                             </button>
                         </div>
@@ -119,7 +119,7 @@
             return qty;
         }
         //add product to cart
-        function AddtoCart(id, name, price) 
+        function AddtoCart(id, name, price, stock, thumb) 
         {
             //get cart items from session
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
@@ -133,6 +133,8 @@
             singleProduct.Name = name;
             singleProduct.Price = price;
             singleProduct.Qty = getCartQty(id);
+            singleProduct.Stock = stock;
+            singleProduct.Thumb = thumb;
             //Add newly created product to shopping cart
             shoppingCart.push(singleProduct);
             //update cart stored in session
