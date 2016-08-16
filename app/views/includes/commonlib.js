@@ -39,6 +39,14 @@ function deduplicateCart()
     setShoppingCart(shoppingCart);
 }
 
+//get qty from page by control id
+function getCartQty(id)
+{
+    var qty = 0;
+    qty = parseInt(document.getElementById("qty"+id).value);
+    return qty;
+}
+
 function initCartTotals() {
     //init shoppingCartTotals obj
     var shoppingCartTotals = {};

@@ -43,7 +43,7 @@
                             ?>
                         </div>
                         <div class="alignleft">
-                            <input class="cartspin" name="qty<?php echo $pdodId; ?>" type="number" value="1"
+                            <input class="cartspin" id="qty<?php echo $pdodId; ?>" type="number" value="1"
                                    min="1" max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
                                     onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'" ?>);">
@@ -64,14 +64,6 @@
     </section>
 
     <script language="JavaScript">
-        var shoppingCart = [];
-        //get qty from page by control name
-        function getCartQty(id)
-        {
-            var qty = 0;
-            qty = parseInt(document.getElementsByName("qty"+id)[0].value);
-            return qty;
-        }
         //add product to cart
         function AddtoCart(id, name, price, stock, thumb) 
         {

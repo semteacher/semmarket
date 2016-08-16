@@ -41,15 +41,14 @@
     </section>
 
     <script language="JavaScript">
-        var shoppingCart = [];
-
-        function deleteCartitem(id)
+        //delete items by id from cart 
+        function deleteCartItem(id)
         {
             //get cart items from session
-            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined")
+            var shoppingCart = getShoppingCart();
+            if (shoppingCart.length > 0)
             {
-                shoppingCart = JSON.parse(cartArrayJSON);
+                //shoppingCart = JSON.parse(cartArrayJSON);
                 for (var i=0; i < shoppingCart.length; i++)
                 {
                     if (shoppingCart[i].Id == id) {
@@ -64,9 +63,8 @@
                 displayMenuCartTotals();
             }
         }
-
-
-
+        
+        //re-display cart content as table
         function displayCart()
         {
             //get and clean table body
@@ -84,13 +82,15 @@
                 var html = '<tr><td><img src="' + mpath + item.Thumb + '" alt="' + item.Name + '" height="50" width="50"></td>';
                 html = html + '<td>' + item.Name + '</td>';
                 html = html + '<td class="text-center"> $ ' + item.Price + '</tdclass>';
-                html = html + '<td><input name="qty"' + item.Id + ' type="number" class="cartspin" value="' + item.Qty + '" min="1" max="' + item.Stock + '"/></td>';
+                html = html + '<td><input id="qty"' + item.Id + ' type="number" class="cartspin" value="' + item.Qty +
+                    '" min="1" max="' + item.Stock + '" oninput="updateCartItemQty()"/></td>';
                 html = html + '<td class="text-center"> $ '+ fixround(item.Qty * item.Price, 2) +'</td>';
-                html = html + '<td><button type="button" class="button" onclick="deleteCartitem(' + item.Id + ')">Delete Item</button></td></tr>';
+                html = html + '<td><button type="button" class="button" onclick="deleteCartItem(' + item.Id + ')">Delete Item</button></td></tr>';
                 tableCartBody.innerHTML = tableCartBody.innerHTML + html ;
             }
             displayTableFooterCartTotals();
         }
+        //page default actions
         window.onload = deduplicateCart();
         window.onload = displayCart();
     </script>
