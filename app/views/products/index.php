@@ -127,41 +127,26 @@
             {
                 shoppingCart = JSON.parse(cartArrayJSON);
             }
-            //create JavaScript Object that will hold product properties and fill data
-            var singleProduct = {};
-            singleProduct.Id = id;
-            singleProduct.Name = name;
-            singleProduct.Price = price;
-            singleProduct.Qty = getCartQty(id);
-            singleProduct.Stock = stock;
-            singleProduct.Thumb = thumb;
-            //Add newly created product to shopping cart
-            shoppingCart.push(singleProduct);
-            //update cart stored in session
-            var jsonStr = JSON.stringify(shoppingCart);
-            sessionStorage.setItem("shoppingCart", jsonStr);
-
-            //get cart totlas info
-            cartArrayJSON = sessionStorage.getItem("shoppingCartTotals");
-            console.log(cartArrayJSON);
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") 
+            //get current qty
+            var itemQty = getCartQty(id);
+            if itemQty > 0 
             {
-                var shoppingCartTotals = JSON.parse(cartArrayJSON);
-                shoppingCartTotals.totalQty = shoppingCartTotals.totalQty + singleProduct.Qty;
-                shoppingCartTotals.totalFee = fixround(shoppingCartTotals.totalFee + (singleProduct.Qty*singleProduct.Price),2);
-            } 
-            else 
-            {
-                var shoppingCartTotals = {};
-                shoppingCartTotals.totalQty = singleProduct.Qty;
-                shoppingCartTotals.totalFee = fixround(singleProduct.Qty*singleProduct.Price,2);
+                //create JavaScript Object that will hold product properties and fill data
+                var singleProduct = {};
+                singleProduct.Id = id;
+                singleProduct.Name = name;
+                singleProduct.Price = price;
+                singleProduct.Qty = itemQty;
+                singleProduct.Stock = stock;
+                singleProduct.Thumb = thumb;
+                //Add newly created product to shopping cart
+                shoppingCart.push(singleProduct);
+                //update cart stored in session
+                var jsonStr = JSON.stringify(shoppingCart);
+                sessionStorage.setItem("shoppingCart", jsonStr);
+                updateCartTotals();
+                displayCartTotals();
             }
-            //update cart totals
-            jsonStr = JSON.stringify(shoppingCartTotals);
-            sessionStorage.setItem("shoppingCartTotals", jsonStr);
-            console.log(fixround(singleProduct.Qty*singleProduct.Price,2));
-            console.log(shoppingCartTotals);
-            document.getElementById("cartmenulink").innerHTML = "In Cart: "+ shoppingCartTotals.totalQty + " ($"+ shoppingCartTotals.totalFee +")";
         }
         function CheckourCart(){
             //get cart items from session

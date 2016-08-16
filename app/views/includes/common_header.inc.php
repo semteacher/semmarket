@@ -12,6 +12,7 @@
     <meta charset="utf-8" />
     <meta name="language" content="en" />
     <link href="<?php echo  SITE_ROOT . '/app/views/includes/main.css'; ?>" type="text/css" rel="stylesheet">
+    <script src="<?php echo  SITE_ROOT . '/app/views/includes/commonlib.js'; ?>"></script>
     <title><?php echo $title; ?></title>
 </head>
 <body>

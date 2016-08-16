@@ -50,12 +50,21 @@
                 }
                 //redraw table
                 displayCart();
+                updateCartTotals();
+                displayCartTotals();
             }
 
 
         }
+
+        deduplicateCart(shoppingCart)
+        {
+
+        }
+
         function displayCart()
         {
+            var shoppingCart = [];
             //get and clean table body
             var tableCartBody = document.getElementById("tablecartbody");
             tableCartBody.innerHTML = '';
@@ -63,6 +72,7 @@
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
             if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
                 shoppingCart = JSON.parse(cartArrayJSON);
+                deduplicateCart(shoppingCart);
                 //console.log(shoppingCart);
             }
             //display table rows
@@ -82,7 +92,7 @@
             }
             //console.log(tableCartBody);
         }
-        document.onload = displayCart();
+        window.onload = displayCart();
     </script>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>

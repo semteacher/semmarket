@@ -32,3 +32,6 @@ if(isset($_SESSION['loggeduser'])){
     </ul>
 </nav>    
 </span>
+<script language="JavaScript">
+    window.onload = displayCartTotals();
+</script>
