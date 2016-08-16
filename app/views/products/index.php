@@ -46,54 +46,13 @@
                             <input class="cartspin" name="qty<?php echo $pdodId; ?>" type="number" value="1"
                                    min="1" max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
-                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'"; ?>)">
+                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'" ?>);">
                                 Add to Cart
                             </button>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
-
-            <table class="datagrid box-center">
-                <thead>>
-                    <th>-</th>
-                    <th>
-                        Sorting: <a
-                            href="<?php echo SITE_ROOT; ?>/products/index&sort=name<?php if (isset($queryparams) && $queryparams[0] == 'name' && !isset($queryparams[1])) {
-                                echo '.desc" class="asc';
-                            } elseif (isset($queryparams) && $queryparams[0] == 'name' && isset($queryparams[1])) {
-                                echo '" class="desc';
-                            } ?>">Name</a>
-                    </th>
-                    <th width="50px">-</th>
-                    <th width="150px">-</th>
-                </thead>
-                <tbody>
-
-                <?php foreach ($products as $product): ?>
-
-                    <tr>
-                        <td><img
-                                src="<?php echo SITE_ROOT . DS . 'media' . DS . 'catalog' . DS . $product->getThumbnail(); ?>"
-                                alt="<?php echo $product->getName(); ?>" height="50" width="50"></td>
-                        <td>
-                            <?php
-                            echo "Name: " . $product->getName() . "<br>";
-                            echo "Description:" . $product->getDescription() . "<br>";
-                            echo "Price, $: " . $product->getPrice() . "<br>";
-                            ?>
-                        </td>
-                        <td><input name="qty<?php echo $product->getId(); ?>" type="number" value="1" min="1"
-                                   max="<?php echo $product->getStockqty(); ?>"/></td>
-                        <td><a class="button"
-                               href="<?php echo SITE_ROOT; ?>/products/add/<?php echo $product->getId(); ?>"
-                               onclick="AddtoCart('Are you sure you want?')">Add to Cart</a></td>
-                    </tr>
-
-                <?php endforeach; ?>
-
-                </tbody>
-            </table>
 
         <?php else: ?>
 

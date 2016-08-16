@@ -28,7 +28,7 @@
             </thead>
             <tfoot>
             <tr>
-                <td colspan="3">Total</td>
+                <td colspan="3">Total:</td>
                 <td id="ftotalqty" class="text-center">$180</td>
                 <td id="ftotalfee" class="text-center">$180</td>
                 <td></td>
