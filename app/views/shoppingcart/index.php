@@ -23,8 +23,8 @@
             <th>Name</th>
             <th width="50px">Price</th>
             <th width="100px">Qty</th>
-            <th>Total</th>
-            <th width="100px">-</th>
+            <th width="100px">Total</th>
+            <th width="150px">-</th>
             </thead>
             <tbody id="tablecartbody">
 
@@ -34,29 +34,53 @@
 
     <script language="JavaScript">
         var shoppingCart = [];
-        function displayCart() {
+        function deleteCartitem(id)
+        {
+            console.log(id);
             //get cart items from session
-            var tableCartBody = document.getElementById("tablecartbody");
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
             if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
                 shoppingCart = JSON.parse(cartArrayJSON);
-                console.log(shoppingCart);
+                for (var i=0; i < shoppingCart.length; i++) {
+                    if (shoppingCart[i].Id == id) {
+                        shoppingCart.splice(i, 1);
+                        var jsonStr = JSON.stringify(shoppingCart);
+                        sessionStorage.setItem("shoppingCart", jsonStr);
+                    }
+                }
+                //redraw table
+                displayCart();
             }
+
+
+        }
+        function displayCart()
+        {
+            //get and clean table body
+            var tableCartBody = document.getElementById("tablecartbody");
+            tableCartBody.innerHTML = '';
+            //get cart items from session
+            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
+                shoppingCart = JSON.parse(cartArrayJSON);
+                //console.log(shoppingCart);
+            }
+            //display table rows
             for (var i = 0; i < shoppingCart.length; ++i) {
                 var item = shoppingCart[i];
                 //console.log(item);
-                var mpath = '' + '<?php echo SITE_ROOT . DS . "media" . DS . "catalog" . DS ?>';
+                //need to break-out escaping var mpath = '\\media\\catalog\\';
+                var mpath = '<?php echo SITE_ROOT . DS . DS . "media" . DS . DS . "catalog" . DS. DS; ?>';
                 var html = '<tr><td><img src="' + mpath + item.Thumb + '" alt="' + item.Name + '" height="50" width="50"></td>';
                 html = html + '<td>' + item.Name + '</td>';
-                console.log(item.Name);
                 html = html + '<td> $ ' + item.Price + '</td>';
                 html = html + '<td><input name="qty"' + item.Id + ' type="number" value="' + item.Qty + '" min="1" max="' + item.Stock + '"/></td>';
-                html = html + '<td>'+ item.Qty * item.Price +'</td>';
-                html = html + '<td></td></tr>';
-console.log(html);
+                html = html + '<td> $ '+ item.Qty * item.Price +'</td>';
+                html = html + '<td><button type="button" class="button" onclick="deleteCartitem(' + item.Id + ')">Delete Item</button></td></tr>';
+//console.log(html);
                 tableCartBody.innerHTML = tableCartBody.innerHTML + html ;
             }
-            console.log(tableCartBody);
+            //console.log(tableCartBody);
         }
         document.onload = displayCart();
     </script>
