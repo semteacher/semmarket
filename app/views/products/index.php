@@ -17,10 +17,6 @@
 
         <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
 
-        <button id="checkout" type="button" class="button"
-                onclick="CheckourCart()">
-            Checkout Cart
-        </button>
 
         <?php if ($products): ?>
             <div class="box-center">
@@ -48,8 +44,7 @@
                         </div>
                         <div class="alignleft">
                             <input class="cartspin" name="qty<?php echo $pdodId; ?>" type="number" value="1"
-                                   min="1"
-                                   max="<?php echo $prodStock; ?>"/>
+                                   min="1" max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
                                     onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'"; ?>)">
                                 Add to Cart
@@ -122,14 +117,10 @@
         function AddtoCart(id, name, price, stock, thumb) 
         {
             //get cart items from session
-            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") 
-            {
-                shoppingCart = JSON.parse(cartArrayJSON);
-            }
+            var shoppingCart = getShoppingCart();
             //get current qty
             var itemQty = getCartQty(id);
-            if itemQty > 0 
+            if (itemQty > 0)
             {
                 //create JavaScript Object that will hold product properties and fill data
                 var singleProduct = {};
@@ -141,16 +132,11 @@
                 singleProduct.Thumb = thumb;
                 //Add newly created product to shopping cart
                 shoppingCart.push(singleProduct);
-                //update cart stored in session
-                var jsonStr = JSON.stringify(shoppingCart);
-                sessionStorage.setItem("shoppingCart", jsonStr);
+                //update cart stored in session, update totals and re-display
+                setShoppingCart(shoppingCart);
                 updateCartTotals();
-                displayCartTotals();
+                displayMenuCartTotals();
             }
-        }
-        function CheckourCart(){
-            //get cart items from session
-            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
         }
     </script>
 

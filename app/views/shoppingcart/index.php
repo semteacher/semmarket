@@ -19,13 +19,21 @@
 
         <table class="datagrid box-center">
             <thead>
-            <th>Image</th>
+            <th width="60px">Image</th>
             <th>Name</th>
-            <th width="50px">Price</th>
-            <th width="100px">Qty</th>
-            <th width="100px">Total</th>
-            <th width="150px">-</th>
+            <th width="80px">Price</th>
+            <th width="80px">Qty</th>
+            <th width="120px">Sub Total</th>
+            <th width="120px">-</th>
             </thead>
+            <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td id="ftotalqty" class="text-center">$180</td>
+                <td id="ftotalfee" class="text-center">$180</td>
+                <td></td>
+            </tr>
+            </tfoot>
             <tbody id="tablecartbody">
 
             </tbody>
@@ -34,14 +42,16 @@
 
     <script language="JavaScript">
         var shoppingCart = [];
+
         function deleteCartitem(id)
         {
-            console.log(id);
             //get cart items from session
             var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
+            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined")
+            {
                 shoppingCart = JSON.parse(cartArrayJSON);
-                for (var i=0; i < shoppingCart.length; i++) {
+                for (var i=0; i < shoppingCart.length; i++)
+                {
                     if (shoppingCart[i].Id == id) {
                         shoppingCart.splice(i, 1);
                         var jsonStr = JSON.stringify(shoppingCart);
@@ -49,49 +59,39 @@
                     }
                 }
                 //redraw table
-                displayCart();
                 updateCartTotals();
-                displayCartTotals();
+                displayCart();
+                displayMenuCartTotals();
             }
-
-
         }
 
-        deduplicateCart(shoppingCart)
-        {
 
-        }
 
         function displayCart()
         {
-            var shoppingCart = [];
             //get and clean table body
             var tableCartBody = document.getElementById("tablecartbody");
             tableCartBody.innerHTML = '';
             //get cart items from session
-            var cartArrayJSON = sessionStorage.getItem("shoppingCart");
-            if (cartArrayJSON !== null && typeof cartArrayJSON !== "undefined") {
-                shoppingCart = JSON.parse(cartArrayJSON);
-                deduplicateCart(shoppingCart);
-                //console.log(shoppingCart);
-            }
+            var shoppingCart = getShoppingCart();
             //display table rows
-            for (var i = 0; i < shoppingCart.length; ++i) {
+            for (var i = 0; i < shoppingCart.length; ++i)
+            {
                 var item = shoppingCart[i];
                 //console.log(item);
                 //need to break-out escaping var mpath = '\\media\\catalog\\';
                 var mpath = '<?php echo SITE_ROOT . DS . DS . "media" . DS . DS . "catalog" . DS. DS; ?>';
                 var html = '<tr><td><img src="' + mpath + item.Thumb + '" alt="' + item.Name + '" height="50" width="50"></td>';
                 html = html + '<td>' + item.Name + '</td>';
-                html = html + '<td> $ ' + item.Price + '</td>';
-                html = html + '<td><input name="qty"' + item.Id + ' type="number" value="' + item.Qty + '" min="1" max="' + item.Stock + '"/></td>';
-                html = html + '<td> $ '+ item.Qty * item.Price +'</td>';
+                html = html + '<td class="text-center"> $ ' + item.Price + '</tdclass>';
+                html = html + '<td><input name="qty"' + item.Id + ' type="number" class="cartspin" value="' + item.Qty + '" min="1" max="' + item.Stock + '"/></td>';
+                html = html + '<td class="text-center"> $ '+ fixround(item.Qty * item.Price, 2) +'</td>';
                 html = html + '<td><button type="button" class="button" onclick="deleteCartitem(' + item.Id + ')">Delete Item</button></td></tr>';
-//console.log(html);
                 tableCartBody.innerHTML = tableCartBody.innerHTML + html ;
             }
-            //console.log(tableCartBody);
+            displayTableFooterCartTotals();
         }
+        window.onload = deduplicateCart();
         window.onload = displayCart();
     </script>
 
