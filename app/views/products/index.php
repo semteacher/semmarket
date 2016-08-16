@@ -67,12 +67,12 @@
         //add product to cart
         function AddtoCart(id, name, price, stock, thumb) 
         {
-            //get cart items from session
-            var shoppingCart = getShoppingCart();
             //get current qty
             var itemQty = getCartQty(id);
             if (itemQty > 0)
             {
+                //get cart items from session
+                var shoppingCart = getShoppingCart();
                 //create JavaScript Object that will hold product properties and fill data
                 var singleProduct = {};
                 singleProduct.Id = id;

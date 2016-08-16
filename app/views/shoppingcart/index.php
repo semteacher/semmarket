@@ -46,24 +46,47 @@
         {
             //get cart items from session
             var shoppingCart = getShoppingCart();
-            if (shoppingCart.length > 0)
-            {
-                //shoppingCart = JSON.parse(cartArrayJSON);
-                for (var i=0; i < shoppingCart.length; i++)
+                for (var i = 0; i < shoppingCart.length; i++)
                 {
-                    if (shoppingCart[i].Id == id) {
+                    if (shoppingCart[i].Id == id)
+                    {
                         shoppingCart.splice(i, 1);
-                        var jsonStr = JSON.stringify(shoppingCart);
-                        sessionStorage.setItem("shoppingCart", jsonStr);
+                        setShoppingCart(shoppingCart);
+                        //var jsonStr = JSON.stringify(shoppingCart);
+                        //sessionStorage.setItem("shoppingCart", jsonStr);
+                        break;
                     }
                 }
                 //redraw table
                 updateCartTotals();
                 displayCart();
                 displayMenuCartTotals();
+        }
+
+        function updateCartItemQty(id)
+        {
+            //get current qty
+            var newQty = getCartQty(id);
+            if (newQty > 0) {
+                //get cart items from session
+                var shoppingCart = getShoppingCart();
+                for (var i = 0; i < shoppingCart.length; i++) {
+                    if (shoppingCart[i].Id == id) {
+                        shoppingCart[i].Qty = newQty;
+                        document.getElementById("stotal" + id).innerHTML = "$ " + fixround(shoppingCart[i].Qty * shoppingCart[i].Price, 2);
+                        setShoppingCart(shoppingCart);
+                        //var jsonStr = JSON.stringify(shoppingCart);
+                        //sessionStorage.setItem("shoppingCart", jsonStr);
+                        break;
+                    }
+                }
+                //redraw table
+                updateCartTotals();
+                displayMenuCartTotals();
+                displayTableFooterCartTotals();
             }
         }
-        
+
         //re-display cart content as table
         function displayCart()
         {
@@ -78,15 +101,15 @@
                 var item = shoppingCart[i];
                 //console.log(item);
                 //need to break-out escaping var mpath = '\\media\\catalog\\';
-                var mpath = '<?php echo SITE_ROOT . DS . DS . "media" . DS . DS . "catalog" . DS. DS; ?>';
+                var mpath = '<?php echo SITE_ROOT . DS . DS . "media" . DS . DS . "catalog" . DS . DS; ?>';
                 var html = '<tr><td><img src="' + mpath + item.Thumb + '" alt="' + item.Name + '" height="50" width="50"></td>';
                 html = html + '<td>' + item.Name + '</td>';
                 html = html + '<td class="text-center"> $ ' + item.Price + '</tdclass>';
-                html = html + '<td><input id="qty"' + item.Id + ' type="number" class="cartspin" value="' + item.Qty +
-                    '" min="1" max="' + item.Stock + '" oninput="updateCartItemQty()"/></td>';
-                html = html + '<td class="text-center"> $ '+ fixround(item.Qty * item.Price, 2) +'</td>';
+                html = html + '<td><input id="qty' + item.Id + '" type="number" class="cartspin" value="' + item.Qty +
+                    '" min="1" max="' + item.Stock + '" oninput="updateCartItemQty(' + item.Id + ')"/></td>';
+                html = html + '<td id="stotal' + item.Id + '" class="text-center"> $ ' + fixround(item.Qty * item.Price, 2) + '</td>';
                 html = html + '<td><button type="button" class="button" onclick="deleteCartItem(' + item.Id + ')">Delete Item</button></td></tr>';
-                tableCartBody.innerHTML = tableCartBody.innerHTML + html ;
+                tableCartBody.innerHTML = tableCartBody.innerHTML + html;
             }
             displayTableFooterCartTotals();
         }
