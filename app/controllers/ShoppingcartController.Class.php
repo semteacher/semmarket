@@ -18,7 +18,9 @@ class ShoppingcartController extends Controller
     {
         try 
         {
-            //$userName = $_SESSION['loggeduser']['userName'];
+            //$deliveryOptions = $this->_model->getDeliveryOptions(); //TODO: does not implementd due to test case
+            $deliveryOptions = ["pickup"=>0, "ups"=>5];
+            
             if (isset($_SESSION['loggeduser']['userName']))
             {
                 $billtitle = 'Bill for ' . $_SESSION['loggeduser']['userName'];
@@ -30,15 +32,15 @@ class ShoppingcartController extends Controller
             {
                 $billtitle = 'Bill for Guest';
                 $balancetitle = 'Your Gift is: $ ';
-                $userbalance = SHOPPING_GIFT; //test task gift
+                $userbalance = SHOPPING_GIFT;
             }
-            //$products = $this->_model->getAllProducts($queryparams);
-            //$this->_view->set('products', $products);
+
             $this->_view->set('title', 'SemMarket - My Shopping Cart');
             $this->_view->set('pageheader', 'My Shopping Cart');
             $this->_view->set('billtitle', $billtitle);
             $this->_view->set('balancetitle', $balancetitle);
             $this->_view->set('userbalance', $userbalance);
+            $this->_view->set('deliveryOptions', $deliveryOptions);
 
             return $this->_view->output();
 

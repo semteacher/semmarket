@@ -23,7 +23,7 @@
             <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" name="order[orderId]">
             <input type="hidden" value="<?php if(isset($order['orderdetails'])){echo $order['orderdetails'];} ?>" id="order[orderdetails]" name="order[orderdetails]">
             <div id="billtitlebox" class="text-center">
-                <?php echo $billtitle?>
+                <?php echo $billtitle; ?>
             </div>
             <div id="balance">
                 <?php echo $balancetitle . $userbalance; ?>
@@ -31,9 +31,10 @@
             <div>
                 <label for="order[deliverymethod]">How to Delivery: </label>
                 <select name="order[deliverymethod]" id="deliverymethod" onchange="updateBill()">
-                    <option value="0" selected>--Please, choose an option:--</option>
-                    <option value="pickup">pick up ($0)</option>
-                    <option value="ups">UPS ($5)</option>
+                    <option value="-1" selected>--Please, choose an option:--</option>
+                    <?php foreach ($deliveryOptions as $optName => $optCost): ?>
+                    <option value="<?php echo $optName; ?>"><?php echo $optName . " ( $ ". $optCost . " )"; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <hr>
@@ -71,13 +72,13 @@
     </section>
 
     <script language="JavaScript">
-        //check that delivery was chhosen and submit order form
+        //check that delivery was chosen and submit order form
         function orderSubmit()
         {
             var delivetySel = document.getElementById("deliverymethod");
             var deliveryOpt = delivetySel.options[delivetySel.selectedIndex].value;
             console.log(deliveryOpt);
-            if (deliveryOpt != '0')
+            if (deliveryOpt != '-1')
             {
                 var shoppingCart = getShoppingCart();
                 document.getElementById("order[orderdetails]").value = shoppingCart;
@@ -92,14 +93,18 @@
         //update grand total and rest on delivery choice
         function updateBill()
         {
-            var shoppingCartTotals = getShoppingCartTotals();
+            //get delivery options object from PHP
+            var deliveryOptObj = JSON.parse('<?php echo json_encode($deliveryOptions); ?>');
+            //get selected delivery option
             var delivetySel = document.getElementById("deliverymethod");
             var deliveryOpt = delivetySel.options[delivetySel.selectedIndex].value;
-            console.log(deliveryOpt);
-            var grandTotal = shoppingCartTotals.totalFee;
+            //get finance data
             var userBalance = '<?php echo $userbalance; ?>';
-            if (deliveryOpt == 'ups'){
-                grandTotal = grandTotal + 5;
+            var shoppingCartTotals = getShoppingCartTotals();
+            var grandTotal = shoppingCartTotals.totalFee;
+            //calculate an display grandtotal
+            if (deliveryOpt != '-1') {
+                grandTotal = grandTotal + parseFloat(deliveryOptObj[deliveryOpt]);
             }
             document.getElementById("grandtotal").innerHTML = fixround(grandTotal, 2);
             document.getElementById("rest").innerHTML = fixround(userBalance - grandTotal,2);
@@ -123,6 +128,7 @@
                 }
                 //redraw table
                 updateCartTotals();
+                updateBill();
                 displayCart();
                 displayMenuCartTotals();
         }
@@ -147,6 +153,7 @@
                 }
                 //redraw table
                 updateCartTotals();
+                updateBill();
                 displayMenuCartTotals();
                 displayTableFooterCartTotals();
             }
