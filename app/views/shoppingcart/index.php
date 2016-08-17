@@ -19,7 +19,7 @@
             <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
         </div>
 
-        <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/receipt" method="post" id="cartcheckoutform" name="cartcheckout">
+        <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/saveorder" method="post" id="cartcheckoutform" name="cartcheckout">
             <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" name="order[orderId]">
             <input type="hidden" value="<?php if(isset($order['orderdetails'])){echo $order['orderdetails'];} ?>" id="order[orderdetails]" name="order[orderdetails]">
             <div id="billtitlebox" class="text-center">
@@ -81,7 +81,12 @@
             if (deliveryOpt != '-1')
             {
                 var shoppingCart = getShoppingCart();
-                document.getElementById("order[orderdetails]").value = shoppingCart;
+                document.getElementById("order[orderdetails]").value = JSON.stringify(shoppingCart);
+                //clean current local shopping data and submit form
+                shoppingCart = [];
+                setShoppingCart(shoppingCart);
+                initCartTotals();
+                updateCartTotals();
                 document.getElementById("cartcheckoutform").submit();
             }
             else
@@ -121,8 +126,6 @@
                     {
                         shoppingCart.splice(i, 1);
                         setShoppingCart(shoppingCart);
-                        //var jsonStr = JSON.stringify(shoppingCart);
-                        //sessionStorage.setItem("shoppingCart", jsonStr);
                         break;
                     }
                 }
@@ -146,8 +149,6 @@
                         shoppingCart[i].Qty = newQty;
                         document.getElementById("stotal" + id).innerHTML = "$ " + fixround(shoppingCart[i].Qty * shoppingCart[i].Price, 2);
                         setShoppingCart(shoppingCart);
-                        //var jsonStr = JSON.stringify(shoppingCart);
-                        //sessionStorage.setItem("shoppingCart", jsonStr);
                         break;
                     }
                 }
