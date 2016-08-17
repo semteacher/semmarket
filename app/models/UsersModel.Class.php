@@ -49,6 +49,12 @@ class UsersModel extends Model
         return $this->_role;
     }
     
+    public function getUserBalance()
+    {
+        //TODO: test task only default
+        return (int) 100;    
+    }
+    
     public function getAllUsers()
     {
         $userList = [];

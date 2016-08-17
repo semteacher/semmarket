@@ -20,12 +20,12 @@
     <input type="hidden" value="<?php if(isset($user)){echo $user['id_user'];} ?>" name="id_user">
     <input type="hidden" value="<?php if(isset($user)){echo $user['username'];} ?>" name="username">
     <input type="hidden" value="<?php if(isset($user)){echo $user['role'];} ?>" name="role">
-    <div>Username: <?php if(isset($user)){echo $user['username'];} ?></div>
+    <div class="alignleft">Username: <?php if(isset($user)){echo $user['username'];} ?> </div>
     <div>Role: <?php if(isset($user)){echo $user['role'];} ?></div>
-    <div><label for="password">Password: </label><input type="password" value="" name="password" required></div>
-    <div><label for="confirmpassword">Password (confirm): </label><input type="password" value="" name="confirmpassword" required></div>
+    <div><label class="fixedlabel" for="password">Password: </label><input type="password" value="" name="password" required></div>
+    <div><label class="fixedlabel" for="confirmpassword">Password (confirm): </label><input type="password" value="" name="confirmpassword" required></div>
 
-    <div>
+    <div class="labelbtn">
         <input class="button" type="submit" name="changepasswordsubmit" value="save">
         <input class="button" type="button" onclick="window.location.replace('<?php echo SITE_ROOT; ?>/users/index')" value="cancel" />
     </div>

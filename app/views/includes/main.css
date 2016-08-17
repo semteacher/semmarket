@@ -81,6 +81,41 @@ body
 	text-decoration:none;
 }
 
+#cartcheckoutform
+{
+    display: inline-block;
+    padding: 5px;
+    margin: 5px 0px 5px 0px;
+    background-color: #F3F3F3;
+    font-weight:bold;
+}
+
+#billtitlebox
+{
+    background-color:#EFF4FA;
+    border-style: solid;
+    border-width: 1px;
+    font-size:16px;
+    font-weight:bold;
+    padding: 2px;
+}
+
+#balance
+{
+    color: #273ecd;
+    font-weight:bold;
+}
+
+#grandtotal
+{
+    color: orange;
+}
+
+#rest
+{
+    color: #273ecd;
+}
+
 .alignright
 {
     float: right;
@@ -185,7 +220,7 @@ form{
     border-width: 1px;
 }
 
-label{
+.fixedlabel{
     display: inline-block;
     width: 250px;
     text-align: right;

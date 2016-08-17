@@ -11,13 +11,43 @@
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_menu.inc.php'; ?>
 
     <section id="content">
-        <div>
-            <div class="inline"><span><h2><?php echo $pageheader; ?></h2></span></div>
+        <div class="inline">
+            <div>
+                <div class="inline"><span><h2><?php echo $pageheader; ?></h2></span></div>
+            </div>
+
+            <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
         </div>
 
-        <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
+        <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/receipt" method="post" id="cartcheckoutform" name="cartcheckout">
+            <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" name="order[orderId]">
+            <input type="hidden" value="<?php if(isset($order['orderdetails'])){echo $order['orderdetails'];} ?>" id="order[orderdetails]" name="order[orderdetails]">
+            <div id="billtitlebox" class="text-center">
+                <?php echo $billtitle?>
+            </div>
+            <div id="balance">
+                <?php echo $balancetitle . $userbalance; ?>
+            </div>
+            <div>
+                <label for="order[deliverymethod]">How to Delivery: </label>
+                <select name="order[deliverymethod]" id="deliverymethod" onchange="updateBill()">
+                    <option value="0" selected>--Please, choose an option:--</option>
+                    <option value="pickup">pick up ($0)</option>
+                    <option value="ups">UPS ($5)</option>
+                </select>
+            </div>
+            <hr>
+            <div>
+                Grand Total: $ <span id="grandtotal"></span> <span class="alignright">Rest: $ <span id="rest"></span></span>
+            </div>
+            <hr>
+            <div class="text-center">
+                <input type="button" class="button" name="ordersubmit" onclick="orderSubmit()" value="Check-out and Pay now!">
+            </div>
+        </form>
 
-        <table class="datagrid box-center">
+
+        <table class="datagrid box-center" met >
             <thead>
             <th width="60px">Image</th>
             <th>Name</th>
@@ -41,7 +71,41 @@
     </section>
 
     <script language="JavaScript">
-        //delete items by id from cart 
+        //check that delivery was chhosen and submit order form
+        function orderSubmit()
+        {
+            var delivetySel = document.getElementById("deliverymethod");
+            var deliveryOpt = delivetySel.options[delivetySel.selectedIndex].value;
+            console.log(deliveryOpt);
+            if (deliveryOpt != '0')
+            {
+                var shoppingCart = getShoppingCart();
+                document.getElementById("order[orderdetails]").value = shoppingCart;
+                document.getElementById("cartcheckoutform").submit();
+            }
+            else
+            {
+                alert("Delivery optin did not selected!");
+            }
+        }
+
+        //update grand total and rest on delivery choice
+        function updateBill()
+        {
+            var shoppingCartTotals = getShoppingCartTotals();
+            var delivetySel = document.getElementById("deliverymethod");
+            var deliveryOpt = delivetySel.options[delivetySel.selectedIndex].value;
+            console.log(deliveryOpt);
+            var grandTotal = shoppingCartTotals.totalFee;
+            var userBalance = '<?php echo $userbalance; ?>';
+            if (deliveryOpt == 'ups'){
+                grandTotal = grandTotal + 5;
+            }
+            document.getElementById("grandtotal").innerHTML = fixround(grandTotal, 2);
+            document.getElementById("rest").innerHTML = fixround(userBalance - grandTotal,2);
+        }
+
+        //delete items by id from cart
         function deleteCartItem(id)
         {
             //get cart items from session
@@ -63,6 +127,7 @@
                 displayMenuCartTotals();
         }
 
+        //fired when any cart item qty is changed
         function updateCartItemQty(id)
         {
             //get current qty
@@ -116,6 +181,7 @@
         //page default actions
         window.onload = deduplicateCart();
         window.onload = displayCart();
+        window.onload = updateBill();
     </script>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>

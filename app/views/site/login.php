@@ -16,8 +16,8 @@
 </div>
 <div class="errbox"><?php if(isset($loginerr)){echo $loginerr;} ?></div>
 <form action="<?php echo SITE_ROOT; ?>/site/login" method="post" name="loginuser">
-    <div><label for="username">Username:</label><input type="text" value="" name="username" required></div>
-    <div><label for="username">Password:</label><input type="password" value="" name="password" required></div>
+    <div><label class="fixedlabel" for="username">Username:</label><input type="text" value="" name="username" required></div>
+    <div><label class="fixedlabel" for="username">Password:</label><input type="password" value="" name="password" required></div>
     <div class="labelbtn divpadd">
         <input class="button" type="submit" name="loginusersubmit" value="login">
         <input class="button" type="button" onclick="window.location.replace('<?php echo SITE_ROOT; ?>/site/index')" value="cancel" />
