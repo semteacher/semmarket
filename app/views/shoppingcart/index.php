@@ -20,7 +20,8 @@
         </div>
 
         <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/saveorder" method="post" id="cartcheckoutform" name="cartcheckout">
-            <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" name="order[orderId]">
+            <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" id="order[orderId]" name="order[orderId]">
+            <input type="hidden" value="<?php if(isset($order['ordergrandtotal'])){echo $order['ordergrandtotal'];} ?>" id="order[ordergrandtotal]" name="order[ordergrandtotal]">
             <input type="hidden" value="<?php if(isset($order['orderdetails'])){echo $order['orderdetails'];} ?>" id="order[orderdetails]" name="order[orderdetails]">
             <div id="billtitlebox" class="text-center">
                 <?php echo $billtitle; ?>
@@ -82,6 +83,7 @@
             {
                 var shoppingCart = getShoppingCart();
                 document.getElementById("order[orderdetails]").value = JSON.stringify(shoppingCart);
+                document.getElementById("order[ordergrandtotal]").value = document.getElementById("grandtotal").innerHTML;
                 //clean current local shopping data and submit form
                 shoppingCart = [];
                 setShoppingCart(shoppingCart);

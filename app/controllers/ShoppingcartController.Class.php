@@ -25,7 +25,7 @@ class ShoppingcartController extends Controller
             {
                 $billtitle = 'Order Bill for ' . $_SESSION['loggeduser']['userName'];
                 $balancetitle = 'Your balance: $ ';
-                $loggedUser = new UsersModel;
+                $loggedUser = new UsersModel();
                 $userbalance = $loggedUser->getUserBalance();
             }
             else
@@ -59,20 +59,41 @@ class ShoppingcartController extends Controller
             if (isset($_POST['order']))
             {
                 $orderId = isset($_POST['order']['orderId']) ? $_POST['order']['orderId'] : NULL;
-                $orderdetails = $_POST['order']['orderdetails'];
-                var_dump(json_decode($orderdetails));
+                $orderdetails = json_decode($_POST['order']['orderdetails']);
                 $deliverymethod = $_POST['order']['deliverymethod'];
-            }
-            //save order
-            //TODO: test case
-            //processing fee
-            //TODO: test case
-            //prepare receipt view
-            $this->_setView('receipt');
-            $this->_view->set('title', 'SemMarket - Your recipe');
-            $this->_view->set('pageheader', 'Your recipe');
+                $grandtotal = $_POST['order']['ordergrandtotal'];
+                var_dump($orderdetails);
+                var_dump($deliverymethod);
+                var_dump($grandtotal);
+                //die();
 
-            return $this->_view->output();
+                //save order
+                $userId = isset($_SESSION['loggeduser']['userId']) ? intvat($_SESSION['loggeduser']['userId']) : 0;
+                //TODO: test case
+                $orderModel = new OrdersModel();
+                $orderModel->setOrder($userId, $deliverymethod, $grandtotal);
+                $orderId = $orderModel->addOrder();
+                var_dump($orderId);
+                foreach ($orderdetails as $key=>$orderdetail)
+                {
+                    var_dump($orderdetail);
+                    $orderDetailModel = new OrderdetailsModel();
+                    $orderDetailModel->setOrderDeatil($orderId, $orderdetail->Id, $orderdetail->Qty, $orderdetail->Price);
+                    $orderDetailModel->addOrderDetail();
+                }
+                //processing fee
+                //TODO: test case
+                //prepare receipt view
+                $this->_setView('receipt');
+                $this->_view->set('title', 'SemMarket - Your recipe');
+                $this->_view->set('pageheader', 'Your recipe');
+
+                return $this->_view->output();
+            }
+            else
+            {
+                //redirect to product catalog
+            }
 
         } 
         catch (Exception $e)

@@ -6,7 +6,7 @@
  * Date: 17.08.2016
  * Time: 21:18
  */
-class OrderdetailsModel
+class OrderdetailsModel extends Model
 {
     private $_id;
     private $_orderId;
@@ -65,7 +65,7 @@ var_dump($orderDetailsList);
         $sql = "INSERT INTO orderdetails
                     (orderid, productid, qty, price)
                 VALUES
-                    (?, ?, ?)";
+                    (?, ?, ?, ?)";
 
         $orderDetailData = array(
             $this->_orderId,

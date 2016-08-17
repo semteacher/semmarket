@@ -40,7 +40,7 @@ class OrdersModel extends Model
     public function setOrder($idUser=0, $deliverytype, $grandtotal)
     {
         $this->_userId = $idUser;
-        $this->_creatertime = time();
+        //$this->_creatertime = time();
         $this->_deliverytype = $deliverytype;
         $this->_grandtotal = $grandtotal;
     }
@@ -48,18 +48,25 @@ class OrdersModel extends Model
     public function addOrder()
     {
         $sql = "INSERT INTO orders
-                    (userid, creatertime, deliverytype, grandtotal)
+                    (userid, deliverytype, grandtotal)
                 VALUES
-                    (?, ?, ?, ?)";
+                    (?, ?, ?)";
 
         $orderData = array(
             $this->_userId,
-            $this->_creatertime,
+            //$this->_creatertime,
             $this->_deliverytype,
             $this->_grandtotal
         );
 
         $sth = $this->_db->prepare($sql);
-        return $sth->execute($orderData);
+        if ($sth->execute($orderData))
+        {
+            return $this->getLastInsertId();
+        }
+        else 
+        {
+        return FALSE;
+        }
     }
 }
