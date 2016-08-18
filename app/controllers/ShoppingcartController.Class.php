@@ -70,7 +70,7 @@ class ShoppingcartController extends Controller
                 $grandtotal = $_POST['order']['ordergrandtotal'];
 
                 //save order
-                $userId = isset($_SESSION['loggeduser']['userId']) ? intvat($_SESSION['loggeduser']['userId']) : 0;
+                $userId = isset($_SESSION['loggeduser']['userId']) ? intval($_SESSION['loggeduser']['userId']) : 0;
                 try
                 {
                     //TODO: test case
