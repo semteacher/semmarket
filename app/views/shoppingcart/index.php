@@ -177,6 +177,7 @@
                 //console.log(item);
                 //need to break-out escaping var mpath = '\\media\\catalog\\';
                 var mpath = '<?php echo SITE_ROOT . DS . DS . "media" . DS . DS . "catalog" . DS . DS; ?>';
+                //var mpath = '<?php echo SITE_ROOT . DS . "media" . DS . "catalog" . DS; ?>';//for zzz hosting!!
                 var html = '<tr><td><img src="' + mpath + item.Thumb + '" alt="' + item.Name + '" height="50" width="50"></td>';
                 html = html + '<td>' + item.Name + '</td>';
                 html = html + '<td class="text-center"> $ ' + item.Price + '</tdclass>';
