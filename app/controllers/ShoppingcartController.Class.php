@@ -53,8 +53,14 @@ class ShoppingcartController extends Controller
     
     public function saveorder()
     {
+        $errors = array();
         try
         {
+            //TODO: test case
+            //prepare receipt report view
+            $this->_setView('receipt');
+            $this->_view->set('title', 'SemMarket - Your recipe');
+            $this->_view->set('pageheader', 'Your order report');
             //get order data
             if (isset($_POST['order']))
             {
@@ -62,43 +68,45 @@ class ShoppingcartController extends Controller
                 $orderdetails = json_decode($_POST['order']['orderdetails']);
                 $deliverymethod = $_POST['order']['deliverymethod'];
                 $grandtotal = $_POST['order']['ordergrandtotal'];
-                var_dump($orderdetails);
-                var_dump($deliverymethod);
-                var_dump($grandtotal);
-                //die();
 
                 //save order
                 $userId = isset($_SESSION['loggeduser']['userId']) ? intvat($_SESSION['loggeduser']['userId']) : 0;
-                //TODO: test case
-                $orderModel = new OrdersModel();
-                $orderModel->setOrder($userId, $deliverymethod, $grandtotal);
-                $orderId = $orderModel->addOrder();
-                var_dump($orderId);
-                foreach ($orderdetails as $key=>$orderdetail)
+                try
                 {
-                    var_dump($orderdetail);
-                    $orderDetailModel = new OrderdetailsModel();
-                    $orderDetailModel->setOrderDeatil($orderId, $orderdetail->Id, $orderdetail->Qty, $orderdetail->Price);
-                    $orderDetailModel->addOrderDetail();
+                    //TODO: test case
+                    $orderModel = new OrdersModel();
+                    $orderModel->setOrder($userId, $deliverymethod, $grandtotal);
+                    $orderId = $orderModel->addOrder();
+                    foreach ($orderdetails as $key => $orderdetail)
+                    {
+                        $orderDetailModel = new OrderdetailsModel();
+                        $orderDetailModel->setOrderDeatil($orderId, $orderdetail->Id, $orderdetail->Qty, $orderdetail->Price);
+                        $orderDetailModel->addOrderDetail();
+                    }
+                    //processing fee
+                    //TODO: test case
+                    $this->_view->set('success', "Your order saved successfully! Order id: " . $orderId . " ");
                 }
-                //processing fee
-                //TODO: test case
-                //prepare receipt view
-                $this->_setView('receipt');
-                $this->_view->set('title', 'SemMarket - Your recipe');
-                $this->_view->set('pageheader', 'Your recipe');
+                catch (Exception $e)
+                {
+                    array_push($errors, "Order saving Error(s)! " . $e->getMessage());
+                    $this->_view->set('errors', $errors);
+                }
 
                 return $this->_view->output();
             }
             else
             {
-                //redirect to product catalog
+                array_push($errors, "Order submission Error(s)!");
+                $this->_view->set('errors', $errors);
             }
+
+            return $this->_view->output();
 
         } 
         catch (Exception $e)
         {
-            echo "Application error - cannot display Shopping Cart: " . $e->getMessage();
+            echo "Application error - cannot Save Order: " . $e->getMessage();
         }
     }
 }

@@ -18,6 +18,7 @@
 
         <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
     </div>
+    <div><?php if(!empty($success)){ echo $success; } ?></div>
 </section>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>
