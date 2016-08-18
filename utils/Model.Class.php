@@ -43,4 +43,9 @@ class Model {
         $sth->execute($data);
         return $sth->fetch();
     }
+    
+    public function getLastInsertId()
+    {
+        return $this->_db->lastInsertId();
+    }
 }

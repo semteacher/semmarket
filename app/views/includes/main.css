@@ -81,6 +81,41 @@ body
 	text-decoration:none;
 }
 
+#cartcheckoutform
+{
+    display: inline-block;
+    padding: 5px;
+    margin: 5px 0px 5px 0px;
+    background-color: #F3F3F3;
+    font-weight:bold;
+}
+
+#billtitlebox
+{
+    background-color:#EFF4FA;
+    border-style: solid;
+    border-width: 1px;
+    font-size:16px;
+    font-weight:bold;
+    padding: 2px;
+}
+
+#balance
+{
+    color: #273ecd;
+    font-weight:bold;
+}
+
+#grandtotal
+{
+    color: orange;
+}
+
+#rest
+{
+    color: #273ecd;
+}
+
 .alignright
 {
     float: right;
@@ -136,6 +171,7 @@ body
     padding: 5px 0px 5px 0px;
     display: block;
 }
+
 /* add sorting icons to gridview sort links */
 a.asc {
     background: url(sort_up.gif) no-repeat scroll right center rgba(0, 0, 0, 0);
@@ -154,22 +190,28 @@ table.datagrid  {
 table {
     border-collapse: collapse; 
     width: 100%;
+    alignment: center;
 }
 
 th, td {
     border: none;
-    padding: 3px 0px 3px 0px;
+    padding: 3px;
 }
 
-th{
+th, tfoot td{
     background-color: orange; 
     color: #fff;
 }
 
-tr:nth-of-type(even){
+tfoot td{
+    font-weight:bold;
+}
+
+tbody tr:nth-of-type(even){
     background-color: #F3F3F3;
 }
-tr:nth-of-type(odd) { 
+
+tbody tr:nth-of-type(odd) {
     background-color:#ddd;
 }
 
@@ -178,19 +220,22 @@ form{
     border-width: 1px;
 }
 
-label{
+.fixedlabel{
     display: inline-block;
     width: 250px;
     text-align: right;
 }
-.cartspin{
-	width: 50px;
-}
+
 .labelbtn{
     position: relative;
     clear: left;
     left: 186px;
 }
+
+.cartspin{
+    width: 50px;
+}
+
 .floating-box {
 	display: inline-block;
 	width: 450px;

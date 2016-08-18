@@ -6,7 +6,8 @@
  * Time: 18:12
  */
 
-class ProductsModel extends Model {
+class ProductsModel extends Model 
+{
     private $_id;
     private $_code;
     private $_name;

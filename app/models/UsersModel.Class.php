@@ -6,7 +6,8 @@
  * Time: 18:12
  */
 
-class UsersModel extends Model {
+class UsersModel extends Model 
+{
     private $_idUser;
     private $_userName;
     private $_password;
@@ -46,6 +47,12 @@ class UsersModel extends Model {
     public function getRole()
     {
         return $this->_role;
+    }
+    
+    public function getUserBalance()
+    {
+        //TODO: test task only default
+        return (int) 100;    
     }
     
     public function getAllUsers()

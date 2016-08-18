@@ -6,6 +6,7 @@
  * Time: 17:39
  */
 
-class SiteModel extends Model {
+class SiteModel extends Model 
+{
 
 }

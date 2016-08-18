@@ -9,7 +9,7 @@
 <span class="inline alignright">
 <nav>
     <ul id="usermenu">
-    <li><span><a href="<?php echo SITE_ROOT; ?>/shoppingcart/index">My Cart</a></span></li>
+    <li><a id="cartmenulink" href="<?php echo SITE_ROOT; ?>/shoppingcart/index">My Cart</a></li>
 <?php 
 if(isset($_SESSION['loggeduser'])){
 ?>
@@ -21,14 +21,17 @@ if(isset($_SESSION['loggeduser'])){
     }    
 ?>
         </strong></span></li>
-        <li><span><a href="<?php echo SITE_ROOT; ?>/site/logout">Logout</a></span></li>
+        <li><a href="<?php echo SITE_ROOT; ?>/site/logout">Logout</a></li>
 <?php    
 } else {
 ?>
-        <li><span><a href="<?php echo SITE_ROOT; ?>/site/login">Login</a></span></li>
+        <li><a href="<?php echo SITE_ROOT; ?>/site/login">Login</a></li>
 <?php 
 } 
 ?>
     </ul>
 </nav>    
 </span>
+<script language="JavaScript">
+    window.onload = displayMenuCartTotals();
+</script>

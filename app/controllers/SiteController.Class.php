@@ -6,7 +6,8 @@
  * Time: 17:37
  */
 
-class SiteController extends Controller {
+class SiteController extends Controller 
+{
     public function __construct($model, $action)
     {
         parent::__construct($model, $action);
@@ -48,6 +49,7 @@ class SiteController extends Controller {
                     
                     if ($login) {
                         //login successfull
+                        $_SESSION['loggeduser']['userId'] = $loggedUser->getIdUser();
                         $_SESSION['loggeduser']['userName'] = $loggedUser->getUserName();
                         $_SESSION['loggeduser']['userRole'] = $loggedUser->getRole();
                         header('Location: '.SITE_ROOT.'/site/index');

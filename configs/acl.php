@@ -14,7 +14,7 @@ $acl=[
         'events'=>['share'],
         'contacts'=>['index', 'edit', 'save', 'del', 'select'],
         'users'=>['index', 'edit', 'save', 'del', 'add', 'changepassword'],
-        'shoppingcart'=>['index'],
+        'shoppingcart'=>['index', 'saveorder', 'receipt'],
         'products'=>['index']
         ],
     'user'=>[
@@ -22,12 +22,12 @@ $acl=[
         'albums'=>['share'],
         'events'=>['share'],
         'users'=>['index'],
-        'shoppingcart'=>['index'],
+        'shoppingcart'=>['index', 'saveorder', 'receipt'],
         'products'=>['index']
     ],
     'guest'=>[
         'site'=>['index', 'login', 'err403'],
-        'shoppingcart'=>['index'],
+        'shoppingcart'=>['index', 'saveorder', 'receipt'],
         'products'=>['index']
     ]
 ];
