@@ -1,141 +1,121 @@
-body
-{
-	width: 95%;
+body {
+    width: 95%;
     margin: 0 auto;
-	padding: 0;
-	color: #555;
-	font: normal 11pt Arial,Helvetica,sans-serif;
-	background: #EFEFEF;
+    padding: 0;
+    color: #555;
+    font: normal 11pt Arial, Helvetica, sans-serif;
+    background: #EFEFEF;
 }
 
-#page
-{
-	margin-top: 5px;
-	margin-bottom: 5px;
-	background: white;
-	border: 1px solid #C9E0ED;
+#page {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background: white;
+    border: 1px solid #C9E0ED;
 }
 
-#header
-{
-	margin: 0;
-	padding: 0 20px;
-	border-top: 3px solid #C9E0ED;
+#header {
+    margin: 0;
+    padding: 0 20px;
+    border-top: 3px solid #C9E0ED;
 }
 
-#content
-{
+#content {
     padding: 20px;
 }
 
-#sidebar
-{
-	padding: 20px 20px 20px 0;
+#sidebar {
+    padding: 20px 20px 20px 0;
 }
 
-#footer
-{
-	padding: 10px;
-	margin: 10px 20px;
-	font-size: 0.8em;
-	text-align: center;
-	border-top: 1px solid #C9E0ED;
+#footer {
+    padding: 10px;
+    margin: 10px 20px;
+    font-size: 0.8em;
+    text-align: center;
+    border-top: 1px solid #C9E0ED;
 }
 
-#logo
-{
-	padding: 10px 20px;
-	font-size: 200%;
+#logo {
+    padding: 10px 20px;
+    font-size: 200%;
 }
 
-#mainmenu
-{
-	background:white url(bg.gif) repeat-x left top;
+#mainmenu {
+    background: white url(bg.gif) repeat-x left top;
 }
 
-#mainmenu ul
-{
-	padding:6px 20px 5px 20px;
-	margin:0px;
+#mainmenu ul {
+    padding: 6px 20px 5px 20px;
+    margin: 0px;
 }
 
-#mainmenu ul li
-{
-	display: inline;
+#mainmenu ul li {
+    display: inline;
 }
 
-#mainmenu ul li a
-{
-	color:#ffffff;
-	background-color:transparent;
-	font-size:12px;
-	font-weight:bold;
-	text-decoration:none;
-	padding:5px 8px;
+#mainmenu ul li a {
+    color: #ffffff;
+    background-color: transparent;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 8px;
 }
 
-#mainmenu ul li a:hover, #mainmenu ul li.active a
-{
-	color: #6399cd;
-	background-color:#EFF4FA;
-	text-decoration:none;
+#mainmenu ul li a:hover, #mainmenu ul li.active a {
+    color: #6399cd;
+    background-color: #EFF4FA;
+    text-decoration: none;
 }
 
-#cartcheckoutform
-{
+#cartcheckoutform {
     display: inline-block;
     padding: 5px;
     margin: 5px 0px 5px 0px;
     background-color: #F3F3F3;
-    font-weight:bold;
+    font-weight: bold;
 }
 
-#billtitlebox
-{
-    background-color:#EFF4FA;
+#billtitlebox {
+    background-color: #EFF4FA;
     border-style: solid;
     border-width: 1px;
-    font-size:16px;
-    font-weight:bold;
+    font-size: 16px;
+    font-weight: bold;
     padding: 2px;
 }
 
-#balance
-{
+#balance {
     color: #273ecd;
-    font-weight:bold;
+    font-weight: bold;
 }
 
-#grandtotal
-{
+#grandtotal {
     color: orange;
 }
 
-#rest
-{
+#rest {
     color: #273ecd;
 }
 
-.alignright
-{
+.alignright {
     float: right;
 }
 
-.alignleft
-{
+.alignleft {
     float: left;
 }
 
-.box-center { 
-    margin: 0 auto; 
+.box-center {
+    margin: 0 auto;
 }
-    
-.text-center { 
-    text-align: center; 
-}    
 
-.inline
-{
+.text-center {
+    text-align: center;
+}
+
+.inline {
     display: inline-block;
 }
 
@@ -150,7 +130,7 @@ body
     -moz-border-radius: 3;
     border-radius: 3px;
     font-family: Arial;
-    font-weight:bold;
+    font-weight: bold;
     color: #ffffff;
     font-size: 15px;
     padding: 3px 10px 3px 10px;
@@ -183,12 +163,12 @@ a.desc {
     padding-right: 20px;
 }
 
-table.datagrid  {
+table.datagrid {
 
 }
 
 table {
-    border-collapse: collapse; 
+    border-collapse: collapse;
     width: 100%;
     alignment: center;
 }
@@ -198,50 +178,50 @@ th, td {
     padding: 3px;
 }
 
-th, tfoot td{
-    background-color: orange; 
+th, tfoot td {
+    background-color: orange;
     color: #fff;
 }
 
-tfoot td{
-    font-weight:bold;
+tfoot td {
+    font-weight: bold;
 }
 
-tbody tr:nth-of-type(even){
+tbody tr:nth-of-type(even) {
     background-color: #F3F3F3;
 }
 
 tbody tr:nth-of-type(odd) {
-    background-color:#ddd;
+    background-color: #ddd;
 }
 
-form{
+form {
     border-style: solid;
     border-width: 1px;
 }
 
-.fixedlabel{
+.fixedlabel {
     display: inline-block;
     width: 250px;
     text-align: right;
 }
 
-.labelbtn{
+.labelbtn {
     position: relative;
     clear: left;
     left: 186px;
 }
 
-.cartspin{
+.cartspin {
     width: 50px;
 }
 
 .floating-box {
-	display: inline-block;
-	width: 450px;
-	height: 200px;
-	margin: 5px;
-	border: 2px solid #c9e0ed;
+    display: inline-block;
+    width: 450px;
+    height: 200px;
+    margin: 5px;
+    border: 2px solid #c9e0ed;
 }
 
 

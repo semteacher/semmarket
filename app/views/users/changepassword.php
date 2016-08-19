@@ -10,26 +10,46 @@
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_menu.inc.php'; ?>
 
-<section id="content">
-<div>
-    <span><h2><?php echo $pageheader; ?></h2></span>
-</div>
+    <section id="content">
+        <div>
+            <span><h2><?php echo $pageheader; ?></h2></span>
+        </div>
 
-<form action="<?php echo SITE_ROOT; ?>/users/save" method="post" name="adduser">
-    <input type="hidden" value="<?php echo $mode; ?>" name="mode">
-    <input type="hidden" value="<?php if(isset($user)){echo $user['id_user'];} ?>" name="id_user">
-    <input type="hidden" value="<?php if(isset($user)){echo $user['username'];} ?>" name="username">
-    <input type="hidden" value="<?php if(isset($user)){echo $user['role'];} ?>" name="role">
-    <div class="alignleft">Username: <?php if(isset($user)){echo $user['username'];} ?> </div>
-    <div>Role: <?php if(isset($user)){echo $user['role'];} ?></div>
-    <div><label class="fixedlabel" for="password">Password: </label><input type="password" value="" name="password" required></div>
-    <div><label class="fixedlabel" for="confirmpassword">Password (confirm): </label><input type="password" value="" name="confirmpassword" required></div>
+        <form action="<?php echo SITE_ROOT; ?>/users/save" method="post" name="adduser">
+            <input type="hidden" value="<?php echo $mode; ?>" name="mode">
+            <input type="hidden" value="<?php if (isset($user))
+            {
+                echo $user['id_user'];
+            } ?>" name="id_user">
+            <input type="hidden" value="<?php if (isset($user))
+            {
+                echo $user['username'];
+            } ?>" name="username">
+            <input type="hidden" value="<?php if (isset($user))
+            {
+                echo $user['role'];
+            } ?>" name="role">
+            <div class="alignleft">Username: <?php if (isset($user))
+                {
+                    echo $user['username'];
+                } ?> </div>
+            <div>Role: <?php if (isset($user))
+                {
+                    echo $user['role'];
+                } ?></div>
+            <div><label class="fixedlabel" for="password">Password: </label><input type="password" value=""
+                                                                                   name="password" required></div>
+            <div><label class="fixedlabel" for="confirmpassword">Password (confirm): </label><input type="password"
+                                                                                                    value=""
+                                                                                                    name="confirmpassword"
+                                                                                                    required></div>
 
-    <div class="labelbtn">
-        <input class="button" type="submit" name="changepasswordsubmit" value="save">
-        <input class="button" type="button" onclick="window.location.replace('<?php echo SITE_ROOT; ?>/users/index')" value="cancel" />
-    </div>
-</form>
-</section>
+            <div class="labelbtn">
+                <input class="button" type="submit" name="changepasswordsubmit" value="save">
+                <input class="button" type="button"
+                       onclick="window.location.replace('<?php echo SITE_ROOT; ?>/users/index')" value="cancel"/>
+            </div>
+        </form>
+    </section>
 
 <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_footer.inc.php'; ?>

@@ -13,7 +13,7 @@ class ShoppingcartModel extends Model
      */
     public function getDeliveryOptions()
     {
-        $testarray = array("pickup"=>0, "ups"=>5);
+        $testarray = array("pickup" => 0, "ups" => 5);
         return $testarray;
     }
 }

@@ -29,19 +29,25 @@ if (isset($_GET['load']))
 }
 
 //check role/set default if nope
-if(isset($_SESSION['loggeduser']['userRole'])){
+if (isset($_SESSION['loggeduser']['userRole']))
+{
     $userRole = $_SESSION['loggeduser']['userRole'];
-} else {
+}
+else
+{
     $userRole = DEFAULT_SITE_ROLE;
 }
 
 //check permissions
-if (!isset($acl[$userRole][strtolower($controller)])){
+if (!isset($acl[$userRole][strtolower($controller)]))
+{
     //redirect to 403
     $controller = 'Site';
     $action = 'err403';
     $query = null;
-} elseif (array_search($action, $acl[$userRole][strtolower($controller)]) === False){
+}
+elseif (array_search($action, $acl[$userRole][strtolower($controller)]) === False)
+{
     //redirect to 403
     $controller = 'Site';
     $action = 'err403';

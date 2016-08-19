@@ -17,5 +17,5 @@
     </ul>
 </nav>
 </span>
-<?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_user.inc.php'; ?>
+    <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_user.inc.php'; ?>
 </div>

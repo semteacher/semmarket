@@ -31,13 +31,15 @@ class OrdersModel extends Model
         if (empty($orderData))
         {
             return false;
-        } else {
+        }
+        else
+        {
             return $orderData;
         }
 
     }
-    
-    public function setOrder($idUser=0, $deliverytype, $grandtotal)
+
+    public function setOrder($idUser = 0, $deliverytype, $grandtotal)
     {
         $this->_userId = $idUser;
         //$this->_creatertime = time();
@@ -64,9 +66,9 @@ class OrdersModel extends Model
         {
             return $this->getLastInsertId();
         }
-        else 
+        else
         {
-        return FALSE;
+            return FALSE;
         }
     }
 }

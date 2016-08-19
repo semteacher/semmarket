@@ -19,10 +19,20 @@
             <?php include HOME . DS . 'app' . DS . 'views' . DS . 'includes' . DS . 'common_errorbox.inc.php'; ?>
         </div>
 
-        <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/saveorder" method="post" id="cartcheckoutform" name="cartcheckout">
-            <input type="hidden" value="<?php if(isset($order['orderId'])){echo $order['orderId'];} ?>" id="order[orderId]" name="order[orderId]">
-            <input type="hidden" value="<?php if(isset($order['ordergrandtotal'])){echo $order['ordergrandtotal'];} ?>" id="order[ordergrandtotal]" name="order[ordergrandtotal]">
-            <input type="hidden" value="<?php if(isset($order['orderdetails'])){echo $order['orderdetails'];} ?>" id="order[orderdetails]" name="order[orderdetails]">
+        <form class="alignright" action="<?php echo SITE_ROOT; ?>/shoppingcart/saveorder" method="post"
+              id="cartcheckoutform" name="cartcheckout">
+            <input type="hidden" value="<?php if (isset($order['orderId']))
+            {
+                echo $order['orderId'];
+            } ?>" id="order[orderId]" name="order[orderId]">
+            <input type="hidden" value="<?php if (isset($order['ordergrandtotal']))
+            {
+                echo $order['ordergrandtotal'];
+            } ?>" id="order[ordergrandtotal]" name="order[ordergrandtotal]">
+            <input type="hidden" value="<?php if (isset($order['orderdetails']))
+            {
+                echo $order['orderdetails'];
+            } ?>" id="order[orderdetails]" name="order[orderdetails]">
             <div id="billtitlebox" class="text-center">
                 <?php echo $billtitle; ?>
             </div>
@@ -34,22 +44,25 @@
                 <select name="order[deliverymethod]" id="deliverymethod" onchange="updateBill()">
                     <option value="-1" selected>--Please, choose an option:--</option>
                     <?php foreach ($deliveryOptions as $optName => $optCost): ?>
-                    <option value="<?php echo $optName; ?>"><?php echo $optName . " ( $ ". $optCost . " )"; ?></option>
+                        <option
+                            value="<?php echo $optName; ?>"><?php echo $optName . " ( $ " . $optCost . " )"; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <hr>
             <div>
-                Grand Total: $ <span id="grandtotal"></span> <span class="alignright">Rest: $ <span id="rest"></span></span>
+                Grand Total: $ <span id="grandtotal"></span> <span class="alignright">Rest: $ <span
+                        id="rest"></span></span>
             </div>
             <hr>
             <div class="text-center">
-                <input type="button" class="button" name="ordersubmit" onclick="orderSubmit()" value="Check-out and Pay now!">
+                <input type="button" class="button" name="ordersubmit" onclick="orderSubmit()"
+                       value="Check-out and Pay now!">
             </div>
         </form>
 
 
-        <table class="datagrid box-center" met >
+        <table class="datagrid box-center" met>
             <thead>
             <th width="60px">Image</th>
             <th>Name</th>
@@ -74,13 +87,11 @@
 
     <script language="JavaScript">
         //check that delivery was chosen and submit order form
-        function orderSubmit()
-        {
+        function orderSubmit() {
             var delivetySel = document.getElementById("deliverymethod");
             var deliveryOpt = delivetySel.options[delivetySel.selectedIndex].value;
             console.log(deliveryOpt);
-            if (deliveryOpt != '-1')
-            {
+            if (deliveryOpt != '-1') {
                 var shoppingCart = getShoppingCart();
                 document.getElementById("order[orderdetails]").value = JSON.stringify(shoppingCart);
                 document.getElementById("order[ordergrandtotal]").value = document.getElementById("grandtotal").innerHTML;
@@ -91,15 +102,13 @@
                 updateCartTotals();
                 document.getElementById("cartcheckoutform").submit();
             }
-            else
-            {
+            else {
                 alert("Delivery optin did not selected!");
             }
         }
 
         //update grand total and rest on delivery choice
-        function updateBill()
-        {
+        function updateBill() {
             //get delivery options object from PHP
             var deliveryOptObj = JSON.parse('<?php echo json_encode($deliveryOptions); ?>');
             //get selected delivery option
@@ -114,33 +123,29 @@
                 grandTotal = grandTotal + parseFloat(deliveryOptObj[deliveryOpt]);
             }
             document.getElementById("grandtotal").innerHTML = fixround(grandTotal, 2);
-            document.getElementById("rest").innerHTML = fixround(userBalance - grandTotal,2);
+            document.getElementById("rest").innerHTML = fixround(userBalance - grandTotal, 2);
         }
 
         //delete items by id from cart
-        function deleteCartItem(id)
-        {
+        function deleteCartItem(id) {
             //get cart items from session
             var shoppingCart = getShoppingCart();
-                for (var i = 0; i < shoppingCart.length; i++)
-                {
-                    if (shoppingCart[i].Id == id)
-                    {
-                        shoppingCart.splice(i, 1);
-                        setShoppingCart(shoppingCart);
-                        break;
-                    }
+            for (var i = 0; i < shoppingCart.length; i++) {
+                if (shoppingCart[i].Id == id) {
+                    shoppingCart.splice(i, 1);
+                    setShoppingCart(shoppingCart);
+                    break;
                 }
-                //redraw table
-                updateCartTotals();
-                updateBill();
-                displayCart();
-                displayMenuCartTotals();
+            }
+            //redraw table
+            updateCartTotals();
+            updateBill();
+            displayCart();
+            displayMenuCartTotals();
         }
 
         //fired when any cart item qty is changed
-        function updateCartItemQty(id)
-        {
+        function updateCartItemQty(id) {
             //get current qty
             var newQty = getCartQty(id);
             if (newQty > 0) {
@@ -163,16 +168,14 @@
         }
 
         //re-display cart content as table
-        function displayCart()
-        {
+        function displayCart() {
             //get and clean table body
             var tableCartBody = document.getElementById("tablecartbody");
             tableCartBody.innerHTML = '';
             //get cart items from session
             var shoppingCart = getShoppingCart();
             //display table rows
-            for (var i = 0; i < shoppingCart.length; ++i)
-            {
+            for (var i = 0; i < shoppingCart.length; ++i) {
                 var item = shoppingCart[i];
                 //console.log(item);
                 //need to break-out escaping var mpath = '\\media\\catalog\\';
