@@ -64,7 +64,7 @@
                 
             </div>
             
-            <form id="prodrating" method="get" action="<?php echo SITE_ROOT; ?>/products/saverating" name="prodrating">
+            <form id="prodrating" action="<?php echo SITE_ROOT; ?>/products/saverating/" method="get" name="prodratingform">
                 <input type="hidden" value="" id="prodrateid" name="prodrateid">
                 <input type="hidden" value="" id="prodrateval" name="prodrateval">
             </form> 

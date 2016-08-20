@@ -54,11 +54,31 @@ class ProductsController extends Controller
         
     public function saverating()
     {
+        $errors = array();
+        $success = array();
+        $this->_setView('index');
         try
         {
-            $this->_setView('index');
+            if (isset($_GET['prodrateid'])&&isset($_GET['prodrateval']))
+            {
+                $product = $this->_model->getProductById(intval($_GET['prodrateid']));
+                $currratingavg = $product->getRatingAvg();
+                $currratingcnt = $product->getRatingCnt();
+                $newratingavg = ($currratingavg*$currratingcnt + intval($_GET['prodrateval'])) / ($currratingcnt + 1);
+                $product->setRatingAvg($newratingavg);
+                $product->setRatingCnt($currratingcnt + 1);
+                $product->UpdateRating();
+
+                array_push($success, 'Your vote saved successfully!');
+                $this->_view->set('success', $success);
+            }
+            else
+            {
+                array_push($errors, "Rating submission error!");
+                $this->_view->set('errors', $errors);
+            }
+
             $this->index();
-            
         }
          catch (Exception $e)
         {

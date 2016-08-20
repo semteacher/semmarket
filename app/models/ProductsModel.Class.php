@@ -87,10 +87,20 @@ class ProductsModel extends Model
     {
         return $this->_ratingavg; 
     }
+
+    public function setRatingAvg($ratingavg)
+    {
+        $this->_ratingavg = $ratingavg;
+    }
     
     public function getRatingCnt()
     {
         return $this->_ratingcount; 
+    }
+
+    public function setRatingCnt($ratingcount)
+    {
+        $this->_ratingcount = $ratingcount;
     }
 
     public function getAllProducts($sortoptions = NULL)
@@ -178,7 +188,7 @@ class ProductsModel extends Model
         $sql = "SELECT
                     *
                 FROM
-                    producs p
+                    products p
                 WHERE
                     p.id = ?";
 
@@ -191,11 +201,28 @@ class ProductsModel extends Model
         }
         else
         {
-            $tmpproduct = $this->setProductByArray($productDetails);
-
-            return $tmpproduct;
+            $this->setProductByArray($productDetails);
+            return $this;
         }
 
+    }
+
+    public function UpdateRating()
+    {
+        $sql = "UPDATE products p
+                SET
+                    p.ratingavg=?, p.ratingcount=?
+                WHERE
+                    p.id = ?";
+
+        $userData = array(
+            $this->_ratingavg,
+            $this->_ratingcount,
+            $this->_id
+        );
+
+        $sth = $this->_db->prepare($sql);
+        return $sth->execute($userData);
     }
 
 }
