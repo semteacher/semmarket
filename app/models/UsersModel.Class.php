@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: SemenetsA
  * Date: 4.07.2015
  * Time: 18:12
  */
-
-class UsersModel extends Model 
+class UsersModel extends Model
 {
     private $_idUser;
     private $_userName;
@@ -18,21 +18,14 @@ class UsersModel extends Model
 //        parent::__construct();
 //    }
 
-    public function setUser($idUser=NULL, $userName, $password=Null, $role='user')
-    {
-        $this->_idUser = $idUser;
-        $this->_userName = $userName;
-        $this->_password = $password;
-        $this->_role = $role;
-    }
-        /**
+    /**
      * @return mixed
      */
     public function getIdUser()
     {
         return $this->_idUser;
     }
-    
+
     /**
      * @return mixed
      */
@@ -40,7 +33,7 @@ class UsersModel extends Model
     {
         return $this->_userName;
     }
-    
+
     /**
      * @return mixed
      */
@@ -48,13 +41,13 @@ class UsersModel extends Model
     {
         return $this->_role;
     }
-    
+
     public function getUserBalance()
     {
         //TODO: test task only default
-        return (int) 100;    
+        return (int)100;
     }
-    
+
     public function getAllUsers()
     {
         $userList = [];
@@ -70,8 +63,11 @@ class UsersModel extends Model
         if (empty($users))
         {
             return false;
-        } else {
-            foreach ($users as $user) {
+        }
+        else
+        {
+            foreach ($users as $user)
+            {
                 $tmpuser = new UsersModel;
                 $tmpuser->setUser($user['id_user'], $user['username'], null, $user['role']);
                 array_push($userList, $tmpuser);
@@ -80,7 +76,15 @@ class UsersModel extends Model
             return $userList;
         }
     }
-    
+
+    public function setUser($idUser = NULL, $userName, $password = Null, $role = 'user')
+    {
+        $this->_idUser = $idUser;
+        $this->_userName = $userName;
+        $this->_password = $password;
+        $this->_role = $role;
+    }
+
     public function getUserByIdAsArray($id_user)
     {
         $id_user = intval($id_user);
@@ -98,12 +102,14 @@ class UsersModel extends Model
         if (empty($userDetails))
         {
             return false;
-        } else {
+        }
+        else
+        {
             return $userDetails;
         }
 
     }
-    
+
     public function getUserById($id_user)
     {
         $id_user = intval($id_user);
@@ -121,7 +127,9 @@ class UsersModel extends Model
         if (empty($userDetails))
         {
             return false;
-        } else {
+        }
+        else
+        {
 
             $this->_idUser = $userDetails['id_user'];
             $this->_lastName = $userDetails['username'];
@@ -131,7 +139,7 @@ class UsersModel extends Model
         }
 
     }
-    
+
     public function userLogin($userName, $password)
     {
         $sql = "SELECT
@@ -146,10 +154,12 @@ class UsersModel extends Model
 
         if (empty($userDetails))
         {
-    //var_dump($userDetails);
+            //var_dump($userDetails);
             return false;
-        } else {
-        //var_dump($userDetails);
+        }
+        else
+        {
+            //var_dump($userDetails);
             $this->_idUser = $userDetails['id_user'];
             $this->_userName = $userDetails['username'];
             $this->_role = $userDetails['role'];
@@ -157,7 +167,7 @@ class UsersModel extends Model
             return $this;
         }
     }
-    
+
     public function addUser()
     {
         $sql = "INSERT INTO users

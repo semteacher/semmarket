@@ -17,17 +17,20 @@ class ProductsController extends Controller
 
     public function index()
     {
-        try {
+        try
+        {
             //TODO - create APP class and implement request method (like in YII)?
             $queryparams = array();
-            if (isset($_GET['sort'])) {
+            if (isset($_GET['sort']))
+            {
                 $params = array();
                 $params = explode(".", $_GET['sort']);
 
                 //set sort option
                 $queryparams[0] = $params[0];
 
-                if (isset($params[1]) && !empty($params[1])) {
+                if (isset($params[1]) && !empty($params[1]))
+                {
                     //set sort optional param
                     $queryparams[1] = $params[1];
                 }
@@ -42,7 +45,9 @@ class ProductsController extends Controller
 
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error - cannot display Products Catalog: " . $e->getMessage();
         }
     }

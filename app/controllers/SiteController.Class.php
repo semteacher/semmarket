@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: SemenetsA
  * Date: 28.06.2015
  * Time: 17:37
  */
-
-class SiteController extends Controller 
+class SiteController extends Controller
 {
     public function __construct($model, $action)
     {
@@ -14,50 +14,40 @@ class SiteController extends Controller
         $this->_setModel($model);
     }
 
-    public function index()
-    {
-        try {
-
-            $userName = isset($_SESSION['loggeduser']['userName']) ? ucwords($_SESSION['loggeduser']['userName']) : 'Guest';
-            
-            $this->_view->set('admin', 'semteacher@gmail.com');
-            $this->_view->set('pageheader', 'Wellcome SemMarket Inc. Site, '.$userName.'!');
-            $this->_view->set('title', 'SemMarket Inc.');
-
-            return $this->_view->output();
-
-        } catch (Exception $e) {
-            echo "Application error:" . $e->getMessage();
-        }
-    }
-    
     public function login()
     {
-        try {
-        
+        try
+        {
+
             if (isset($_POST['loginusersubmit']))
             {
-                if ($_POST['loginusersubmit']=='cancel'){
+                if ($_POST['loginusersubmit'] == 'cancel')
+                {
                     $this->index();
-                } else {
+                }
+                else
+                {
                     //get POST data
                     $userName = isset($_POST['username']) ? trim($_POST['username']) : NULL;
                     $password = isset($_POST['password']) ? trim($_POST['password']) : NULL;
-                    
+
                     $loggedUser = new UsersModel;
                     $login = $loggedUser->userLogin($userName, $password);
-                    
-                    if ($login) {
+
+                    if ($login)
+                    {
                         //login successfull
                         $_SESSION['loggeduser']['userId'] = $loggedUser->getIdUser();
                         $_SESSION['loggeduser']['userName'] = $loggedUser->getUserName();
                         $_SESSION['loggeduser']['userRole'] = $loggedUser->getRole();
-                        header('Location: '.SITE_ROOT.'/site/index');
+                        header('Location: ' . SITE_ROOT . '/site/index');
                         //$this->index;                       
-                    } else {
+                    }
+                    else
+                    {
                         //login fail
                         $this->_view->set('loginerr', 'Unknown user/password combination!');
-                    }                   
+                    }
                 }
             }
 
@@ -67,11 +57,32 @@ class SiteController extends Controller
 
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error:" . $e->getMessage();
         }
     }
-    
+
+    public function index()
+    {
+        try
+        {
+            $userName = isset($_SESSION['loggeduser']['userName']) ? ucwords($_SESSION['loggeduser']['userName']) : 'Guest';
+
+            $this->_view->set('admin', 'semteacher@gmail.com');
+            $this->_view->set('pageheader', 'Wellcome SemMarket Inc. Site, ' . $userName . '!');
+            $this->_view->set('title', 'SemMarket Inc.');
+
+            return $this->_view->output();
+
+        }
+        catch (Exception $e)
+        {
+            echo "Application error:" . $e->getMessage();
+        }
+    }
+
     public function logout()
     {
         unset($_SESSION['loggeduser']);
@@ -79,10 +90,11 @@ class SiteController extends Controller
         $this->index();
         //header('Location: /site/index');
     }
-    
-    public function err403($errmsg=NULL)
+
+    public function err403($errmsg = NULL)
     {
-        try {
+        try
+        {
 
             $this->_view->set('admin', 'semteacher@gmail.com');
             $this->_view->set('pageheader', 'BundleJoy Inc. - Forbidden!');
@@ -91,7 +103,9 @@ class SiteController extends Controller
 
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error:" . $e->getMessage();
         }
     }

@@ -1,8 +1,12 @@
 <div class="errbox">
     <?php
-    if(!empty($errors)){
+    if (!empty($errors))
+    {
         echo 'Error(s): ';
-        foreach ($errors as $error){echo '<span>'.$error.'</span>';
-        }}
+        foreach ($errors as $error)
+        {
+            echo '<span>' . $error . '</span>';
+        }
+    }
     ?>
 </div>

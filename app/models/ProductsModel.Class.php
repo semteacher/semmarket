@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: SemenetsA
  * Date: 28.06.2015
  * Time: 18:12
  */
-
-class ProductsModel extends Model 
+class ProductsModel extends Model
 {
     private $_id;
     private $_code;
@@ -56,7 +56,7 @@ class ProductsModel extends Model
     {
         return $this->_stockqty;
     }
-    
+
     /**
      * @return mixed
      */
@@ -64,7 +64,7 @@ class ProductsModel extends Model
     {
         return $this->_price;
     }
-    
+
     /**
      * @return mixed
      */
@@ -72,13 +72,52 @@ class ProductsModel extends Model
     {
         return $this->_picture;
     }
-    
+
     /**
      * @return mixed
      */
     public function getThumbnail()
     {
         return $this->_thumbnail;
+    }
+
+    public function getAllProducts($sortoptions = NULL)
+    {
+        $productList = [];
+
+        $sql = "SELECT
+                    *
+                FROM
+                    products p";
+        if ($sortoptions)
+        {
+            $sql = $sql . " ORDER BY p." . $sortoptions[0];
+            if (isset($sortoptions[1]))
+            {
+                $sql = $sql . " " . $sortoptions[1];
+            }
+        }
+        $sql = $sql . ";";
+
+        $this->_setSql($sql);
+        $products = $this->getAll();
+//var_dump($contacts);
+        if (empty($products))
+        {
+            return false;
+        }
+        else
+        {
+            foreach ($products as $product)
+            {
+                $tmpproduct = new ProductsModel;
+                $tmpproduct->setProductByArray($product);
+                array_push($productList, $tmpproduct);
+            }
+//var_dump($contactlist);
+            return $productList;
+        }
+
     }
 
     public function setProductByArray($productDeatils)
@@ -91,40 +130,6 @@ class ProductsModel extends Model
         $this->_price = isset($productDeatils['price']) ? trim($productDeatils['price']) : NULL;
         $this->_picture = isset($productDeatils['picture']) ? trim($productDeatils['picture']) : NULL;
         $this->_thumbnail = isset($productDeatils['thumbnail']) ? trim($productDeatils['thumbnail']) : NULL;
-    }
-    
-    public function getAllProducts($sortoptions=NULL)
-    {
-        $productList = [];
-
-        $sql = "SELECT
-                    *
-                FROM
-                    products p";
-        if ($sortoptions) {
-            $sql = $sql . " ORDER BY p." . $sortoptions[0];
-            if (isset($sortoptions[1])) {
-                $sql = $sql .  " " . $sortoptions[1];
-            }
-        }
-        $sql = $sql . ";";
-
-        $this->_setSql($sql);
-        $products = $this->getAll();
-//var_dump($contacts);
-        if (empty($products))
-        {
-            return false;
-        } else {
-            foreach ($products as $product) {
-                $tmpproduct = new ProductsModel;
-                $tmpproduct->setProductByArray($product);
-                array_push($productList, $tmpproduct);
-            }
-//var_dump($contactlist);
-            return $productList;
-        }
-
     }
 
     public function getProductByIdAsArray($id)
@@ -144,7 +149,9 @@ class ProductsModel extends Model
         if (empty($productDetails))
         {
             return false;
-        } else {
+        }
+        else
+        {
             return $productDetails;
         }
 
@@ -167,9 +174,11 @@ class ProductsModel extends Model
         if (empty($productDetails))
         {
             return false;
-        } else {
-            $tmpproduct=$this->setProductByArray($productDetails);
-            
+        }
+        else
+        {
+            $tmpproduct = $this->setProductByArray($productDetails);
+
             return $tmpproduct;
         }
 

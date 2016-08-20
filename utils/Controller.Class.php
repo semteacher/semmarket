@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: SemenetsA
  * Date: 28.06.2015
  * Time: 11:57
  */
-
-class Controller {
+class Controller
+{
     protected $_model;
     protected $_controller;
     protected $_action;
@@ -19,7 +20,7 @@ class Controller {
         $this->_action = $action;
         $this->_modelBaseName = $model;
 
-        $this->_view = new View(HOME . DS . 'app'. DS .'views' . DS . strtolower($this->_modelBaseName) . DS . $action . '.php');
+        $this->_view = new View(HOME . DS . 'app' . DS . 'views' . DS . strtolower($this->_modelBaseName) . DS . $action . '.php');
     }
 
     protected function _setModel($modelName)
@@ -30,6 +31,6 @@ class Controller {
 
     protected function _setView($viewName)
     {
-        $this->_view = new View(HOME . DS . 'app'. DS .'views' . DS . strtolower($this->_modelBaseName) . DS . $viewName . '.php');
+        $this->_view = new View(HOME . DS . 'app' . DS . 'views' . DS . strtolower($this->_modelBaseName) . DS . $viewName . '.php');
     }
 }

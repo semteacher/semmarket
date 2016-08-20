@@ -13,14 +13,14 @@ class ShoppingcartController extends Controller
         parent::__construct($model, $action);
         $this->_setModel($model);
     }
-    
+
     public function index()
     {
-        try 
+        try
         {
             $deliveryOptions = $this->_model->getDeliveryOptions(); //TODO: does not implementd due to test case
             //$deliveryOptions = ["pickup"=>0, "ups"=>5];
-            
+
             if (isset($_SESSION['loggeduser']['userName']))
             {
                 $billtitle = 'Order Bill for ' . $_SESSION['loggeduser']['userName'];
@@ -44,13 +44,13 @@ class ShoppingcartController extends Controller
 
             return $this->_view->output();
 
-        } 
-        catch (Exception $e) 
+        }
+        catch (Exception $e)
         {
             echo "Application error - cannot display Shopping Cart: " . $e->getMessage();
         }
     }
-    
+
     public function saveorder()
     {
         $errors = array();
@@ -70,7 +70,7 @@ class ShoppingcartController extends Controller
                 $grandtotal = $_POST['order']['ordergrandtotal'];
 
                 //save order
-                $userId = isset($_SESSION['loggeduser']['userId']) ? intvat($_SESSION['loggeduser']['userId']) : 0;
+                $userId = isset($_SESSION['loggeduser']['userId']) ? intval($_SESSION['loggeduser']['userId']) : 0;
                 try
                 {
                     //TODO: test case
@@ -80,7 +80,8 @@ class ShoppingcartController extends Controller
                     foreach ($orderdetails as $key => $orderdetail)
                     {
                         $orderDetailModel = new OrderdetailsModel();
-                        $orderDetailModel->setOrderDeatil($orderId, $orderdetail->Id, $orderdetail->Qty, $orderdetail->Price);
+                        $orderDetailModel->setOrderDeatil($orderId, $orderdetail->Id, $orderdetail->Qty,
+                            $orderdetail->Price);
                         $orderDetailModel->addOrderDetail();
                     }
                     //processing fee
@@ -103,7 +104,7 @@ class ShoppingcartController extends Controller
 
             return $this->_view->output();
 
-        } 
+        }
         catch (Exception $e)
         {
             echo "Application error - cannot Save Order: " . $e->getMessage();

@@ -28,7 +28,8 @@ class View
 
     public function output()
     {
-        if (!file_exists($this->_file)) {
+        if (!file_exists($this->_file))
+        {
             throw new Exception("Template " . $this->_file . " doesn't exist.");
         }
 

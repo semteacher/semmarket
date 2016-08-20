@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: SemenetsA
  * Date: 4.07.2015
  * Time: 18:10
  */
-
-class UsersController extends Controller 
+class UsersController extends Controller
 {
 
     public function __construct($model, $action)
@@ -17,7 +17,8 @@ class UsersController extends Controller
 
     public function index()
     {
-        try {
+        try
+        {
 
             $users = $this->_model->getAllUsers();
             $this->_view->set('users', $users);
@@ -26,29 +27,35 @@ class UsersController extends Controller
 
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error - cannot display Users list: " . $e->getMessage();
         }
     }
-        
+
     public function add()
     {
-        try {
+        try
+        {
 //$this->_setView(edit);
             $this->_view->set('pageheader', 'Add User');
             $this->_view->set('title', 'Add User Form');
             $this->_view->set('mode', 'add');
-           
+
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error - cannot show User form: " . $e->getMessage();
         }
     }
-    
+
     public function edit($userId)
     {
-        try {
+        try
+        {
 
             $user = $this->_model->getUserByIdAsArray((int)$userId);
 
@@ -62,20 +69,23 @@ class UsersController extends Controller
                 $this->_setView(add);
                 $this->_view->set('mode', 'add');
             }
-            
+
             $this->_view->set('pageheader', 'User Details Edit');
             $this->_view->set('title', 'User Details Edit Form');
-            
+
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error - cannot display User data: " . $e->getMessage();
         }
     }
-    
+
     public function changepassword($userId)
     {
-        try {
+        try
+        {
 
             $user = $this->_model->getUserByIdAsArray((int)$userId);
 
@@ -89,26 +99,30 @@ class UsersController extends Controller
                 $this->_setView(add);
                 $this->_view->set('mode', 'add');
             }
-            
+
             $this->_view->set('pageheader', 'Change User Password');
             $this->_view->set('title', 'Change User Password Form');
 
             return $this->_view->output();
 
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             echo "Application error - cannot display User data: " . $e->getMessage();
         }
     }
-    
+
     public function save()
     {
-       // var_dump($_POST);
-        if (!isset($_POST['editusersubmit'])||!isset($_POST['addusersubmit'])||!isset($_POST['changepasswordsubmit']))
+        // var_dump($_POST);
+        if (!isset($_POST['editusersubmit']) || !isset($_POST['addusersubmit']) || !isset($_POST['changepasswordsubmit']))
         {
-            header('Location: '.SITE_ROOT.'/users/index');
+            header('Location: ' . SITE_ROOT . '/users/index');
             //$this->index();
-        } elseif ($_POST['editusersubmit']=='cancel'||$_POST['addusersubmit']=='cancel'||$_POST['changepasswordsubmit']=='cancel'){
-            header('Location: '.SITE_ROOT.'/users/index');
+        }
+        elseif ($_POST['editusersubmit'] == 'cancel' || $_POST['addusersubmit'] == 'cancel' || $_POST['changepasswordsubmit'] == 'cancel')
+        {
+            header('Location: ' . SITE_ROOT . '/users/index');
             //$this->index();
         }
         $errors = array();
@@ -124,28 +138,30 @@ class UsersController extends Controller
         //TODO: create separate model method for the validation
         // if $this->_model->validateContact(-params-) {
         // $this->_model->setContact(-params-)} else { output form with data end error}
-        if (empty($userName)&&(isset($_POST['editusersubmit'])||isset($_POST['addusersubmit'])))
+        if (empty($userName) && (isset($_POST['editusersubmit']) || isset($_POST['addusersubmit'])))
         {
             $check = false;
             array_push($errors, "Username is required!");
         }
 
-        if (empty($password)&&(isset($_POST['addusersubmit'])||isset($_POST['changepassword'])))
+        if (empty($password) && (isset($_POST['addusersubmit']) || isset($_POST['changepassword'])))
         {
             $check = false;
             array_push($errors, "Password is required!");
         }
-        
-        if (empty($confirmpassword)&&(isset($_POST['addusersubmit'])||isset($_POST['changepassword'])))
+
+        if (empty($confirmpassword) && (isset($_POST['addusersubmit']) || isset($_POST['changepassword'])))
         {
             $check = false;
             array_push($errors, "Password confirmation is required!");
         }
-        
+
         //TODO:check is null!
-        if (!empty($password)&&(isset($_POST['editusersubmit'])||isset($_POST['changepasswordsubmit']))){
+        if (!empty($password) && (isset($_POST['editusersubmit']) || isset($_POST['changepasswordsubmit'])))
+        {
             //TODO: password validation rules
-            if ($password !=$confirmpassword) {
+            if ($password != $confirmpassword)
+            {
                 $check = false;
                 array_push($errors, "Passwords mismatch!");
             }
@@ -161,14 +177,19 @@ class UsersController extends Controller
         //form data is invalid
         if (!$check)
         {
-            if (isset($_POST['editusersubmit'])){
+            if (isset($_POST['editusersubmit']))
+            {
                 $this->_setView('edit');
-            } elseif (isset($_POST['changepasswordsubmit'])) {
+            }
+            elseif (isset($_POST['changepasswordsubmit']))
+            {
                 $this->_setView('edit');
-            } else {
+            }
+            else
+            {
                 $this->_setView('add');
             }
-            
+
             $this->_view->set('title', 'User Details Form - Error');
             $this->_view->set('pageheader', 'User Details - Invalid user form data!');
             $this->_view->set('errors', $errors);
@@ -178,7 +199,8 @@ class UsersController extends Controller
         }
 
         //store correct data
-        try {
+        try
+        {
 //var_dump($_POST);
             //TODO: remove
             $contact = $_POST['mode'] == 'add' ? new $this->_model : $this->_model->getUserById((int)$_POST['id_user']);
@@ -192,7 +214,7 @@ class UsersController extends Controller
 
             $this->_model->setUser($_POST['id_user'], $userName, md5($password), $role);
 //var_dump($this->_model);
-            $_POST['mode'] == 'add' ?  $this->_model->addUser() :  $this->_model->updateUser();
+            $_POST['mode'] == 'add' ? $this->_model->addUser() : $this->_model->updateUser();
 
             $this->_setView('index');
             $this->_view->set('title', 'BundleJoy - User Manager');
@@ -210,16 +232,23 @@ class UsersController extends Controller
             $users = $this->_model->getAllUsers();
             $this->_view->set('users', $users);
 
-        } catch (Exception $e) {
-        
-            if (isset($_POST['editusersubmit'])){
+        }
+        catch (Exception $e)
+        {
+
+            if (isset($_POST['editusersubmit']))
+            {
                 $this->_setView('edit');
-            } elseif (isset($_POST['changepasswordsubmit'])) {
+            }
+            elseif (isset($_POST['changepasswordsubmit']))
+            {
                 $this->_setView('edit');
-            } else {
+            }
+            else
+            {
                 $this->_setView('add');
             }
-            
+
             $this->_view->set('title', 'User Details Form - Error');
             $this->_view->set('pageheader', 'User Details - There was an error saving the data!');
             $this->_view->set('mode', $_POST['mode']);

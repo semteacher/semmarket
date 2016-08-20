@@ -46,7 +46,7 @@
                             <input class="cartspin" id="qty<?php echo $pdodId; ?>" type="number" value="1"
                                    min="1" max="<?php echo $prodStock; ?>"/>
                             <button type="button" class="button"
-                                    onclick="AddtoCart(<?php echo "'".$pdodId."','".$prodName."','".$prodPrice."','".$prodStock."','".$prodThumb."'" ?>);">
+                                    onclick="AddtoCart(<?php echo "'" . $pdodId . "','" . $prodName . "','" . $prodPrice . "','" . $prodStock . "','" . $prodThumb . "'" ?>);">
                                 Add to Cart
                             </button>
                         </div>
@@ -65,12 +65,10 @@
 
     <script language="JavaScript">
         //add product to cart
-        function AddtoCart(id, name, price, stock, thumb) 
-        {
+        function AddtoCart(id, name, price, stock, thumb) {
             //get current qty
             var itemQty = getCartQty(id);
-            if (itemQty > 0)
-            {
+            if (itemQty > 0) {
                 //get cart items from session
                 var shoppingCart = getShoppingCart();
                 //create JavaScript Object that will hold product properties and fill data
