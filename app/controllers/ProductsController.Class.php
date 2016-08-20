@@ -51,4 +51,18 @@ class ProductsController extends Controller
             echo "Application error - cannot display Products Catalog: " . $e->getMessage();
         }
     }
+        
+    public function saverating()
+    {
+        try
+        {
+            $this->_setView('index');
+            $this->index();
+            
+        }
+         catch (Exception $e)
+        {
+            echo "Application error - cannot display Products Catalog: " . $e->getMessage();
+        }
+    }    
 }
