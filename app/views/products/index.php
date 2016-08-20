@@ -28,6 +28,8 @@
                     $prodStock = $product->getStockqty();
                     $prodPrice = $product->getPrice();
                     $prodThumb = $product->getThumbnail();
+                    $prodRatingAvg = $product->getRatingAvg();
+                    $prodRatingCnt = $product->getRatingCnt();
                     ?>
                     <div class="floating-box">
                         <div class="alignleft">
@@ -40,6 +42,7 @@
                             echo "Product: " . $prodName . "<br>";
                             echo "Description: " . $prodDesc . "<br>";
                             echo "Price, $: " . $prodPrice . "<br>";
+                            echo "Average Rating: " . $prodRatingAvg . " ( ". $prodRatingCnt ." votes)";
                             ?>
                         </div>
                         <div class="alignleft">
@@ -50,10 +53,21 @@
                                 Add to Cart
                             </button>
                         </div>
+                        <div class="alignleft">
+                            <span>1<input class="ratingrange" id="prodrate<?php echo $pdodId; ?>" type="range" name="points" min="1" max="5">5</span>
+                            <button type="button" class="button"
+                                    onclick="RateProduct(<?php echo $pdodId; ?>);">
+                                    Rate Product                            
+                        </div>
                     </div>
                 <?php endforeach; ?>
+                
             </div>
-
+            
+            <form id="prodrating" method="get" action="<?php echo SITE_ROOT; ?>/products/saverating" name="prodrating">
+                <input type="hidden" value="" id="prodrateid" name="prodrateid">
+                <input type="hidden" value="" id="prodrateval" name="prodrateval">
+            </form> 
         <?php else: ?>
 
             <div><span><h3>Welcome!</h3></span></div>
@@ -65,10 +79,12 @@
 
     <script language="JavaScript">
         //add product to cart
-        function AddtoCart(id, name, price, stock, thumb) {
+        function AddtoCart(id, name, price, stock, thumb) 
+        {
             //get current qty
             var itemQty = getCartQty(id);
-            if (itemQty > 0) {
+            if (itemQty > 0) 
+            {
                 //get cart items from session
                 var shoppingCart = getShoppingCart();
                 //create JavaScript Object that will hold product properties and fill data
@@ -86,6 +102,13 @@
                 updateCartTotals();
                 displayMenuCartTotals();
             }
+        }
+        function RateProduct(id) 
+        {
+            var rating = parseInt(document.getElementById("prodrate" + id).value);
+            document.getElementById("prodrateid").value = id;
+            document.getElementById("prodrateval").value = rating;
+            document.getElementById("prodrating").submit();
         }
     </script>
 

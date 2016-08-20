@@ -16,6 +16,8 @@ class ProductsModel extends Model
     private $_price;
     private $_picture;
     private $_thumbnail;
+    private $_ratingavg;
+    private $_ratingcount;
 
     /**
      * @return mixed
@@ -80,6 +82,16 @@ class ProductsModel extends Model
     {
         return $this->_thumbnail;
     }
+    
+    public function getRatingAvg()
+    {
+        return $this->_ratingavg; 
+    }
+    
+    public function getRatingCnt()
+    {
+        return $this->_ratingcount; 
+    }
 
     public function getAllProducts($sortoptions = NULL)
     {
@@ -130,6 +142,8 @@ class ProductsModel extends Model
         $this->_price = isset($productDeatils['price']) ? trim($productDeatils['price']) : NULL;
         $this->_picture = isset($productDeatils['picture']) ? trim($productDeatils['picture']) : NULL;
         $this->_thumbnail = isset($productDeatils['thumbnail']) ? trim($productDeatils['thumbnail']) : NULL;
+        $this->_ratingavg = isset($productDeatils['ratingavg']) ? trim($productDeatils['ratingavg']) : NULL;
+        $this->_ratingcount = isset($productDeatils['ratingcount']) ? trim($productDeatils['ratingcount']) : NULL;
     }
 
     public function getProductByIdAsArray($id)
